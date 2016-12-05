@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/configuration_iterator.dir/main.cpp.o CMakeFiles/configuration_iterator.dir/CombinatorialIndex.cpp.o  -o configuration_iterator -rdynamic 

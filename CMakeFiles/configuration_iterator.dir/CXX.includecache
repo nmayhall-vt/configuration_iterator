@@ -21,6 +21,24 @@ stdio.h
 -
 stdlib.h
 -
+helpers.h
+/home/nmayhall/Dropbox/Research/code/configuration_iterator/helpers.h
+
+/home/nmayhall/Dropbox/Research/code/configuration_iterator/helpers.cpp
+helpers.h
+/home/nmayhall/Dropbox/Research/code/configuration_iterator/helpers.h
+
+/home/nmayhall/Dropbox/Research/code/configuration_iterator/helpers.h
+stdlib.h
+-
+vector
+-
+iostream
+-
+stdio.h
+-
+stdlib.h
+-
 
 /home/nmayhall/Dropbox/Research/code/configuration_iterator/main.cpp
 stdio.h

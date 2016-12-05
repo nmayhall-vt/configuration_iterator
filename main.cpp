@@ -10,7 +10,10 @@ using namespace arma;
 int main ()
 {
     printf(" Hi, from main\n");
-    CombinatorialIndex Ik;
+    CombinatorialIndex Ik(4,2);
+    Ik.print();
+    Ik.incr();
+    Ik.print();
 
     arma::mat a = arma::zeros(4,4);
     cout << a << endl;

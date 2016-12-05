@@ -6,6 +6,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "helpers.h"
 //#include <algorithm>
 //#include <sstream>
 //#include <string>
@@ -16,15 +18,29 @@ using namespace std;
 class CombinatorialIndex 
 {
     private:
-        int n;  // n choose k
-        int k;  // n choose k
+        int n_orbs;  
+        int n_elec;  
+        vector<int> config;
+        void increment_comb(std::vector<int>& list, const int& Mstart, const int& Mend);
+        long int calc_nchk(const int&, const int&) const;    // n choose k 
+        long int max;
+
     public:
         CombinatorialIndex();
+        CombinatorialIndex(const int&, const int&); // (NOrb,NElec)
         void print();
-        void operator++(){};
+
+        //  transformations
+        //void operator++(){};
+        void incr();
+
+        //  computing data
+        long int calc_linear_index(){};
+        
+        //  accessing data
+        long int get_max();
         vector<int> get_unoccupied(){};
         vector<int> get_occupied(){};
-        long int calc_linear_index(){};
 };
 
 #endif

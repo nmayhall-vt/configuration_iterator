@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/configuration_iterator.dir/main.cpp.o"
   "CMakeFiles/configuration_iterator.dir/CombinatorialIndex.cpp.o"
+  "CMakeFiles/configuration_iterator.dir/helpers.cpp.o"
   "configuration_iterator.pdb"
   "configuration_iterator"
 )

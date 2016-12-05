@@ -33,9 +33,10 @@ class CombinatorialIndex
         //  transformations
         //void operator++(){};
         void incr();
+        void set_config(const vector<int>&);
 
         //  computing data
-        long int calc_linear_index(){};
+        long int calc_linear_index();
         
         //  accessing data
         long int get_max();

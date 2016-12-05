@@ -1,36 +1,33 @@
 #include "CombinatorialIndex.h" 
 
 CombinatorialIndex::CombinatorialIndex()
-{
+{/*{{{*/
     max = -1;
     n_orbs = 0;
     n_elec = 0;
-    printf(" Hi, from constructor\n");
-};
+};/*}}}*/
 
 CombinatorialIndex::CombinatorialIndex(const int& n_, const int& k_)
-{
+{/*{{{*/
     max = -1;
     n_orbs = n_;
     n_elec = k_;
-    printf(" Hi, from constructor2\n");
     
     // Start with initial configuration
     //config.resize(n_elec);
     for(int i=0; i<n_elec; i++) config.push_back(i); 
-};
+};/*}}}*/
 
 void CombinatorialIndex::incr()
-{
+{/*{{{*/
     /* Increment index */
-    increment_comb(config,0,n_orbs);
-};
+    increment_comb(config,0,n_orbs-1);
+};/*}}}*/
 
 void CombinatorialIndex::print()
-{
+{/*{{{*/
     helpers::print(config);
-};
-
+};/*}}}*/
 
 long int CombinatorialIndex::get_max()
 {/*{{{*/
@@ -70,7 +67,49 @@ void CombinatorialIndex::increment_comb(std::vector<int>& list, const int& Mstar
             for(int j=i+1; j<N; j++){
                 list[j] = list[j-1]+1;
             };
+            return;
         };
     };
+    return;
 };/*}}}*/
+
+long int CombinatorialIndex::calc_linear_index()
+{/*{{{*/
+   /* 
+      Return linear index for lexically ordered config string
+      */
+    
+
+    int lin_index = 0;
+
+    int v_prev = -1;
+
+    for(int i=0; i<config.size(); i++){
+        int v = config[i];
+        int M = n_orbs - v;
+        int N = config.size() - i - 1;
+        int w = v - v_prev - 1;
+        //todo: change mchn from function call to data lookup!
+        for(int j=0; j<w; j++){
+            lin_index += calc_nchk(M+j,N);
+        };
+        v_prev = v;
+    };
+    return lin_index;
+};/*}}}*/
+
+void CombinatorialIndex::set_config(const vector<int>& config_)
+{/*{{{*/
+    if(config_.size() == config.size())
+    {
+        config = config_;
+    }
+    else
+    { 
+        cout << " Changing size in set_config NYI" << endl;
+        exit(-1);
+    };
+};/*}}}*/
+
+
 

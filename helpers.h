@@ -10,13 +10,10 @@
 using namespace std;
 
 namespace helpers{
-    int increment_comb(std::vector<int>& list, const int& Mstart, const int& Mend);
-
     void print(const vector<int> &k);
 
     void print(vector<int> &k);
 
-    void print(const vector<int> &k, const vector<int> &l);
 }
 
 

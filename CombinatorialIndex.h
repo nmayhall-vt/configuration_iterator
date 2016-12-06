@@ -26,6 +26,7 @@ class CombinatorialIndex
         long int max;
 
     public:
+        /// Default constructor
         CombinatorialIndex();
         CombinatorialIndex(const int&, const int&); //!< (NOrb,NElec)
         
@@ -41,11 +42,11 @@ class CombinatorialIndex
         long int calc_linear_index(); //!< Calculate the linear index
         
         //  accessing data
-        long int get_max(); //!< Get max of linear index
-        vector<int> get_unoccupied(){}; //!< Return vector of unoccupied orbitals for this current value of the index
-        vector<int> get_occupied(){}; //!< Return vector of occupied orbitals for this current value of the index
+        long int get_max(); ///< Get max of linear index
+        vector<int> get_occupied(); ///< Return vector of occupied orbitals for this current value of the index
+        vector<int> get_unoccupied(); ///< Return vector of unoccupied orbitals for this current value of the index
 
 };
 
-#endif
+#endif  
 

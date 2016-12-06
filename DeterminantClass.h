@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "OrbitalSpaces.h"
 #include "helpers.h"
 //#include <algorithm>
 //#include <sstream>
@@ -26,19 +27,27 @@ class DeterminantClass
         **/
         
     private:
-        int n_orbs_tot;  
-        int n_elec_tot; 
-        int n_blocks; 
-        vector< vector<int> > orbital_blocks_a; //!< orbital_blocks[block][orb1, orb2, ....] alpha
-        vector< vector<int> > orbital_blocks_b; //!< orbital_blocks[block][orb1, orb2, ....] beta 
-        vector<int> block_size_a; //!< size of each alpha orbital block
-        vector<int> block_size_b; //!< size of each beta orbital block
-        vector<int> block_occ_a; //!< Number of electrons in each alpha orbital block
-        vector<int> block_occ_b; //!< Number of electrons in each beta orbital block
+        int _n_orbs;  
+        int _n_elec;
+        int _n_alpha;
+        int _n_beta; 
+        int _n_blocks; 
+        vector<int> _elec_per_block_a; //!< Number of electrons in each alpha orbital block
+        vector<int> _elec_per_block_b; //!< Number of electrons in each beta orbital block
+        OrbitalSpaces _spaces;
     public:
+        /// Default Constructor
         DeterminantClass(){};
-        DeterminantClass(const vector<int>&, const vector<int>&, const vector<int>&);
-        void print();
+
+        /// Constructor taking OrbitalSpaces object, and two vectors indicating number of alpha and beta electrons per block
+        DeterminantClass(OrbitalSpaces, const vector<int>& alpha, const vector<int>& beta);
+        
+        /// Get access to the number of electrons in each alpha orbital block
+        int& elec_per_block_a(const int& i){return _elec_per_block_a.at(i);}; 
+        /// Get access to the number of electrons in each beta orbital block
+        int& elec_per_block_b(const int& i){return _elec_per_block_b.at(i);}; 
+        
+        void print(); ///< Pretty print
 };
 
 #endif

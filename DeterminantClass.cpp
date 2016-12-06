@@ -1,10 +1,10 @@
 #include "DeterminantClass.h"
 
 DeterminantClass::DeterminantClass(
-        const vector<int>& orb_blocks, 
+        OrbitalSpaces spaces, 
         const vector<int>& elec_blocks_a,
         const vector<int>& elec_blocks_b)
-{
+{/*{{{*/
     /* @Brief
        Constructor taking a vector or orbital block definitions, and a vector of block occupation numbers.
 
@@ -13,43 +13,44 @@ DeterminantClass::DeterminantClass(
 
       */
     
-    n_blocks = orb_blocks.size();
-    int orb_i =0;
-    for(int b=0; b<n_blocks; b++)
+    _spaces = spaces;
+    _n_blocks = _spaces.n_blocks();
+    _elec_per_block_a = elec_blocks_a;
+    _elec_per_block_b = elec_blocks_b;
+    
+    _n_alpha = 0;
+    for(int b=0; b<_elec_per_block_a.size(); b++)
     {
-        vector<int> tmp;
-        for(int bi=0; bi<orb_blocks.at(b); bi++)
-        {
-            tmp.push_back(orb_i);
-            orb_i += 1;
-        };
-        orbital_blocks_a.push_back(tmp);
-        orbital_blocks_b.push_back(tmp);
-        block_size_a.push_back(tmp.size());
-        block_size_b.push_back(tmp.size());
+        _n_alpha += _elec_per_block_a.at(b);
     };
-    block_occ_a = elec_blocks_a;
-    block_occ_b = elec_blocks_b;
-};
+    
+    _n_beta = 0;
+    for(int b=0; b<_elec_per_block_b.size(); b++)
+    {
+        _n_beta += _elec_per_block_b.at(b);
+    };
+    _n_elec = _n_alpha + _n_beta;
+    _n_orbs = _spaces.n_orbs();
+};/*}}}*/
 
 void DeterminantClass::print()
 {/*{{{*/
     printf(" Orbitals  |");
-    for(int b=0; b<n_blocks; b++)
+    for(int b=0; b<_n_blocks; b++)
     {
-        printf("(%3i,%-3i)",block_size_a.at(b),block_size_b.at(b));
+        printf("(%3i,%-3i)",_spaces.block_size_a(b),_spaces.block_size_b(b));
     };
     printf("|\n");
     printf(" Electrons |");
-    for(int b=0; b<n_blocks; b++)
+    for(int b=0; b<_n_blocks; b++)
     {
-        printf("(%3i,%-3i)",block_occ_a.at(b),block_occ_b.at(b));
+        printf("(%3i,%-3i)",_elec_per_block_a.at(b),_elec_per_block_b.at(b));
     };
     printf("|\n");
     printf(" Block     |");
-    for(int b=0; b<n_blocks; b++)
+    for(int b=0; b<_n_blocks; b++)
     {
-        printf(" %4i    ",b+1);
+        printf(" %4i    ",b);
     };
     printf("|\n");
 };/*}}}*/

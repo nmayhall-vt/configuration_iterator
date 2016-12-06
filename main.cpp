@@ -4,6 +4,7 @@
 #include <math.h>
 #include "CombinatorialIndex.h"
 #include "DeterminantClass.h"
+#include "OrbitalSpaces.h"
 #include <armadillo>
 
 using namespace arma;
@@ -29,24 +30,36 @@ int main ()
     cout << Ik.calc_linear_index() << endl;
 
     {
-        printf(" Test Determinant Class\n");
+        printf(" Test OrbitalSpaces Class\n");
         vector<int> orbital_blocks;
         orbital_blocks.push_back(10);
         orbital_blocks.push_back(10);
         orbital_blocks.push_back(6);
         orbital_blocks.push_back(6);
         orbital_blocks.push_back(20);
+        OrbitalSpaces spaces(orbital_blocks);
+        spaces.print();
+        printf("\n");
+
+        printf(" Test Determinant Class\n");
         vector<int> electron_blocks;
         electron_blocks.push_back(10);
         electron_blocks.push_back(10);
         electron_blocks.push_back(3);
         electron_blocks.push_back(0);
         electron_blocks.push_back(0);
-        helpers::print(orbital_blocks);
-        DeterminantClass cas_space(orbital_blocks, electron_blocks, electron_blocks);
+        DeterminantClass cas_space(spaces, electron_blocks, electron_blocks);
         cas_space.print();
+        printf("\n");
+
+        printf("   Add one electron to alpha block 3 and remove one electron from beta block 2\n");
+        cas_space.elec_per_block_a(3) += 1;
+        cas_space.elec_per_block_b(2) -= 1;
+        cas_space.print();
+        printf("\n");
     };
 
+    printf(" Test armadillo linking\n");
     arma::mat a = arma::zeros(4,4);
     cout << a << endl;
     return 0;

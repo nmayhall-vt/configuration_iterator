@@ -2,4 +2,6 @@ CMakeFiles/
 Makefile
 cmake_install.cmake
 CMakeCache.txt
-doc
+doc/
+doc/html/
+doc/latex/

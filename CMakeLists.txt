@@ -3,6 +3,6 @@ project (configuration_iterator)
 add_executable(configuration_iterator 
 	main.cpp 
 	CombinatorialIndex.cpp 
-	DeterminantClass.cpp 
+	DeterminantSpaces.cpp 
 	OrbitalSpaces.cpp
 	helpers.cpp)

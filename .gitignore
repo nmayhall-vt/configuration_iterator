@@ -3,5 +3,3 @@ Makefile
 cmake_install.cmake
 CMakeCache.txt
 doc/
-doc/html/
-doc/latex/

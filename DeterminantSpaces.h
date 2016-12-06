@@ -1,5 +1,5 @@
-#ifndef DETERMINANTCLASS_H
-#define DETERMINANTCLASS_H
+#ifndef DETERMINANTSPACES_H
+#define DETERMINANTSPACES_H
 
 #include <stdlib.h>
 #include <vector>
@@ -16,7 +16,7 @@
 
 using namespace std;
 
-class DeterminantClass
+class DeterminantSpaces
 {
     /**  \brief
         Each object of this class defines a unique class of determinants obtained
@@ -37,10 +37,10 @@ class DeterminantClass
         OrbitalSpaces _spaces;
     public:
         /// Default Constructor
-        DeterminantClass(){};
+        DeterminantSpaces(){};
 
         /// Constructor taking OrbitalSpaces object, and two vectors indicating number of alpha and beta electrons per block
-        DeterminantClass(OrbitalSpaces, const vector<int>& alpha, const vector<int>& beta);
+        DeterminantSpaces(OrbitalSpaces, const vector<int>& alpha, const vector<int>& beta);
         
         /// Get access to the number of electrons in each alpha orbital block
         int& elec_per_block_a(const int& i){return _elec_per_block_a.at(i);}; 

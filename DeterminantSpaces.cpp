@@ -1,6 +1,6 @@
-#include "DeterminantClass.h"
+#include "DeterminantSpaces.h"
 
-DeterminantClass::DeterminantClass(
+DeterminantSpaces::DeterminantSpaces(
         OrbitalSpaces spaces, 
         const vector<int>& elec_blocks_a,
         const vector<int>& elec_blocks_b)
@@ -33,7 +33,7 @@ DeterminantClass::DeterminantClass(
     _n_orbs = _spaces.n_orbs();
 };/*}}}*/
 
-void DeterminantClass::print()
+void DeterminantSpaces::print()
 {/*{{{*/
     printf(" Orbitals  |");
     for(int b=0; b<_n_blocks; b++)

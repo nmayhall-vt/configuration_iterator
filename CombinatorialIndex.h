@@ -27,21 +27,24 @@ class CombinatorialIndex
 
     public:
         CombinatorialIndex();
-        CombinatorialIndex(const int&, const int&); // (NOrb,NElec)
-        void print();
+        CombinatorialIndex(const int&, const int&); //!< (NOrb,NElec)
+        
+        
+        void print(); //!< Formatted print
 
         //  transformations
         //void operator++(){};
-        void incr();
-        void set_config(const vector<int>&);
+        void incr(); //!< Increment the combinatorial index by one, updating the configuration string
+        void set_config(const vector<int>&); //!< set the index to specified config
 
         //  computing data
-        long int calc_linear_index();
+        long int calc_linear_index(); //!< Calculate the linear index
         
         //  accessing data
-        long int get_max();
-        vector<int> get_unoccupied(){};
-        vector<int> get_occupied(){};
+        long int get_max(); //!< Get max of linear index
+        vector<int> get_unoccupied(){}; //!< Return vector of unoccupied orbitals for this current value of the index
+        vector<int> get_occupied(){}; //!< Return vector of occupied orbitals for this current value of the index
+
 };
 
 #endif

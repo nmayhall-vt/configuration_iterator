@@ -33,9 +33,11 @@ class DeterminantSpaces
         int _n_alpha;
         int _n_beta; 
         int _n_blocks; 
+        size_t _size;
         vector<int> _elec_per_block_a; //!< Number of electrons in each alpha orbital block
         vector<int> _elec_per_block_b; //!< Number of electrons in each beta orbital block
         OrbitalSpaces _spaces;
+        void calc_size();
     public:
         /// Default Constructor
         DeterminantSpaces(){};
@@ -50,6 +52,9 @@ class DeterminantSpaces
 
         vector<CombinatorialIndex> get_iterators(); ///< Return vector of combinatorial indices for iterating through this determinantspace        
         void print(); ///< Pretty print
+
+        /// Return number of determinants in this space
+        size_t size(){calc_size();return _size;};
 };
 
 #endif

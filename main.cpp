@@ -11,7 +11,8 @@ using namespace arma;
 
 int main ()
 {
-    
+   
+    /* 
     printf(" +Test CombinatorialIndex\n");
     CombinatorialIndex Ik(6,3);
     for(size_t i=0; i<Ik.get_max(); i++)
@@ -28,14 +29,15 @@ int main ()
     b.push_back(5);
     Ik.set_config(b);
     cout << Ik.calc_linear_index() << endl;
+    */
 
     {
         printf(" +Test OrbitalSpaces Class\n");
         vector<int> orbital_blocks;
         orbital_blocks.push_back(10);
         orbital_blocks.push_back(10);
-        orbital_blocks.push_back(6);
-        orbital_blocks.push_back(6);
+        orbital_blocks.push_back(4);
+        orbital_blocks.push_back(8);
         orbital_blocks.push_back(20);
         OrbitalSpaces spaces(orbital_blocks);
         spaces.print();
@@ -45,7 +47,7 @@ int main ()
         vector<int> electron_blocks;
         electron_blocks.push_back(10);
         electron_blocks.push_back(10);
-        electron_blocks.push_back(3);
+        electron_blocks.push_back(2);
         electron_blocks.push_back(0);
         electron_blocks.push_back(0);
         DeterminantSpaces cas_space(spaces, electron_blocks, electron_blocks);
@@ -57,6 +59,8 @@ int main ()
         p_a_space = cas_space;
         p_a_space.elec_per_block_a(3) += 1;
         p_a_space.elec_per_block_a(2) -= 1;
+        p_a_space.elec_per_block_b(3) += 1;
+        p_a_space.elec_per_block_b(1) -= 1;
         p_a_space.print();
         printf("\n");
 

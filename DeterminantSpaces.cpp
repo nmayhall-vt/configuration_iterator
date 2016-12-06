@@ -33,6 +33,32 @@ DeterminantSpaces::DeterminantSpaces(
     _n_orbs = _spaces.n_orbs();
 };/*}}}*/
 
+vector<CombinatorialIndex> DeterminantSpaces::get_iterators()
+{/*{{{*/
+    vector<CombinatorialIndex> tensor_index;
+    for(int b=0; b<_n_blocks; b++)
+    {
+        CombinatorialIndex alpha(_spaces.block_size_a(b),elec_per_block_a(b));
+        tensor_index.push_back(alpha);
+    };
+    for(int b=0; b<_n_blocks; b++)
+    {
+        CombinatorialIndex beta(_spaces.block_size_b(b),elec_per_block_b(b));
+        tensor_index.push_back(beta);
+    };
+    return tensor_index;
+};/*}}}*/
+
+void DeterminantSpaces::calc_size()
+{/*{{{*/
+    _size = 1; 
+    for(int b=0; b<_n_blocks; b++)
+    {
+        _size = _size * helpers::nchk(_spaces.block_size_a(b),elec_per_block_a(b)); 
+        _size = _size * helpers::nchk(_spaces.block_size_b(b),elec_per_block_b(b)); 
+    };
+};/*}}}*/
+
 void DeterminantSpaces::print()
 {/*{{{*/
     printf(" Orbitals  |");
@@ -53,21 +79,15 @@ void DeterminantSpaces::print()
         printf(" %4i    ",b);
     };
     printf("|\n");
-};/*}}}*/
-
-vector<CombinatorialIndex> DeterminantSpaces::get_iterators()
-{/*{{{*/
-    vector<CombinatorialIndex> tensor_index;
+    printf(" # Configs |");
     for(int b=0; b<_n_blocks; b++)
     {
-        CombinatorialIndex alpha(_spaces.block_size_a(b),elec_per_block_a(b));
-        tensor_index.push_back(alpha);
+        size_t block_dim = helpers::nchk(_spaces.block_size_a(b),elec_per_block_a(b)); 
+        block_dim = block_dim * helpers::nchk(_spaces.block_size_b(b),elec_per_block_b(b));
+        printf(" %4li    ",block_dim);
     };
-    for(int b=0; b<_n_blocks; b++)
-    {
-        CombinatorialIndex beta(_spaces.block_size_b(b),elec_per_block_b(b));
-        tensor_index.push_back(beta);
-    };
-    return tensor_index;
+    printf("|\n");
+    printf(" Total size| %li",size());
+    printf("\n");
 };/*}}}*/
 

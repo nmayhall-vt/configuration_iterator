@@ -51,3 +51,14 @@ void helpers::print(const vector<int> &k, const vector<int> &l)
     cout << "]" << endl;
 };/*}}}*/
 
+size_t helpers::nchk(const int& n,const int& k)
+{/*{{{*/
+    //  
+    //  Return m choose n
+    long int accum = 1;
+    for(long int i=1; i<=k; i++){
+        accum = accum * (n-k+i)/i;
+    };
+    return accum;
+};/*}}}*/
+

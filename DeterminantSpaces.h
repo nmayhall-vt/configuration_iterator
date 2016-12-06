@@ -8,6 +8,7 @@
 #include <stdlib.h>
 
 #include "OrbitalSpaces.h"
+#include "CombinatorialIndex.h"
 #include "helpers.h"
 //#include <algorithm>
 //#include <sstream>
@@ -46,7 +47,8 @@ class DeterminantSpaces
         int& elec_per_block_a(const int& i){return _elec_per_block_a.at(i);}; 
         /// Get access to the number of electrons in each beta orbital block
         int& elec_per_block_b(const int& i){return _elec_per_block_b.at(i);}; 
-        
+
+        vector<CombinatorialIndex> get_iterators(); ///< Return vector of combinatorial indices for iterating through this determinantspace        
         void print(); ///< Pretty print
 };
 

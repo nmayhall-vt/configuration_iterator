@@ -14,6 +14,7 @@ namespace helpers{
 
     void print(vector<int> &k);
 
+    void print(const vector<int>&, const vector<int>&);
 }
 
 

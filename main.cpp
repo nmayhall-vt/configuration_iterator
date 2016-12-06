@@ -59,11 +59,25 @@ int main ()
         p_a_space.elec_per_block_a(2) -= 1;
         p_a_space.print();
         printf("\n");
+
+        vector<CombinatorialIndex> t_index = p_a_space.get_iterators();
+        t_index.at(2).incr();
+        t_index.at(7).incr();
+        t_index.at(7).incr();
+        t_index.at(3).incr();
+        for(int s=0; s<spaces.n_blocks(); s++)
+        {
+            int n_blocks = spaces.n_blocks();
+            helpers::print( t_index.at(s).config(), t_index.at(s+spaces.n_blocks()).config() );
+            cout << t_index.at(s).calc_linear_index() << "," << t_index.at(s+n_blocks).calc_linear_index() << endl;
+        };
     };
 
+    /*
     printf(" +Test armadillo linking\n");
     arma::mat a = arma::zeros(4,4);
     cout << a << endl;
+    */
     return 0;
 }
 

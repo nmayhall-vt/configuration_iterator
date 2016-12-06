@@ -54,3 +54,20 @@ void DeterminantSpaces::print()
     };
     printf("|\n");
 };/*}}}*/
+
+vector<CombinatorialIndex> DeterminantSpaces::get_iterators()
+{/*{{{*/
+    vector<CombinatorialIndex> tensor_index;
+    for(int b=0; b<_n_blocks; b++)
+    {
+        CombinatorialIndex alpha(_spaces.block_size_a(b),elec_per_block_a(b));
+        tensor_index.push_back(alpha);
+    };
+    for(int b=0; b<_n_blocks; b++)
+    {
+        CombinatorialIndex beta(_spaces.block_size_b(b),elec_per_block_b(b));
+        tensor_index.push_back(beta);
+    };
+    return tensor_index;
+};/*}}}*/
+

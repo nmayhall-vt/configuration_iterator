@@ -2,42 +2,42 @@
 
 CombinatorialIndex::CombinatorialIndex()
 {/*{{{*/
-    max = -1;
-    n_orbs = 0;
-    n_elec = 0;
+    _max = -1;
+    _n_orbs = 0;
+    _n_elec = 0;
 };/*}}}*/
 
 CombinatorialIndex::CombinatorialIndex(const int& n_, const int& k_)
 {/*{{{*/
-    max = -1;
-    n_orbs = n_;
-    n_elec = k_;
+    _max = -1;
+    _n_orbs = n_;
+    _n_elec = k_;
     
-    // Start with initial configuration
-    //config.resize(n_elec);
-    for(int i=0; i<n_elec; i++) config.push_back(i); 
+    // Start with initial _configuration
+    //_config.resize(_n_elec);
+    for(int i=0; i<_n_elec; i++) _config.push_back(i); 
 };/*}}}*/
 
 void CombinatorialIndex::incr()
 {/*{{{*/
     /* Increment index */
-    increment_comb(config,0,n_orbs-1);
+    increment_comb(_config,0,_n_orbs-1);
 };/*}}}*/
 
 void CombinatorialIndex::print()
 {/*{{{*/
-    helpers::print(config);
+    helpers::print(_config);
 };/*}}}*/
 
 long int CombinatorialIndex::get_max()
 {/*{{{*/
     //  
     //  Return n choose k
-    if (max == -1) // this is the uninitialized value
+    if (_max == -1) // this is the uninitialized value
     {
-        max = calc_nchk(n_orbs,n_elec);
+        _max = calc_nchk(_n_orbs,_n_elec);
     }
-    return max;
+    return _max;
 };/*}}}*/
 
 long int CombinatorialIndex::calc_nchk(const int& n,const int& k) const
@@ -76,7 +76,7 @@ void CombinatorialIndex::increment_comb(std::vector<int>& list, const int& Mstar
 long int CombinatorialIndex::calc_linear_index()
 {/*{{{*/
    /* 
-      Return linear index for lexically ordered config string
+      Return linear index for lexically ordered _config string
       */
     
 
@@ -84,10 +84,10 @@ long int CombinatorialIndex::calc_linear_index()
 
     int v_prev = -1;
 
-    for(int i=0; i<config.size(); i++){
-        int v = config[i];
-        int M = n_orbs - v;
-        int N = config.size() - i - 1;
+    for(int i=0; i<_config.size(); i++){
+        int v = _config[i];
+        int M = _n_orbs - v;
+        int N = _config.size() - i - 1;
         int w = v - v_prev - 1;
         //todo: change mchn from function call to data lookup!
         for(int j=0; j<w; j++){
@@ -98,11 +98,11 @@ long int CombinatorialIndex::calc_linear_index()
     return lin_index;
 };/*}}}*/
 
-void CombinatorialIndex::set_config(const vector<int>& config_)
+void CombinatorialIndex::set_config(const vector<int>& config)
 {/*{{{*/
-    if(config_.size() == config.size())
+    if(config.size() == _config.size())
     {
-        config = config_;
+        _config = config;
     }
     else
     { 

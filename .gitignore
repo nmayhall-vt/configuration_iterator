@@ -3,3 +3,4 @@ Makefile
 cmake_install.cmake
 CMakeCache.txt
 doc/
+configuration_iterator

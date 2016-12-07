@@ -142,10 +142,8 @@ int CombinatorialIndex::calc_single_excitation_sign(const int& n, const int& a)
     int dest;                               // destination index for a
 
 #ifdef DEBUG
-    if( n >= _config.size())
-    {
-        throw std::range_error( "out of range" );
-    };
+    if( n >= _config.size()) throw std::range_error( "out of range: n" );
+    if( a >= _n_orbs) throw std::range_error( "out of range: a");
 #endif
 
 
@@ -184,6 +182,13 @@ int CombinatorialIndex::calc_single_excitation_sign2(const int& i, const int& a)
     //  Complexity: logarithmic in length of config
     //
     
+#ifdef DEBUG
+    if( a >= _n_orbs) throw std::range_error( "out of range: a");
+
+    //todo
+    //  make sure i is in range
+    //
+#endif
     
     vector<int>::const_iterator pos_i_sorted;     // electron index for i in canonical ordering
     vector<int>::const_iterator pos_a_sorted;     // electron index for a in canonical ordering

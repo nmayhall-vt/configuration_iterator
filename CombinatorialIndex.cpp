@@ -112,4 +112,95 @@ void CombinatorialIndex::set_config(const vector<int>& config)
 };/*}}}*/
 
 
+int CombinatorialIndex::calc_single_excitation_sign(const int& n, const int& a)
+{/*{{{*/
+    //  
+    //  Compute sign required to bring an "excited" active space configuration,
+    //  obtained by replacing assigning a to n (config[n] = a) into canonical (sorted)
+    //  order.
+    //
+    //  Input:  
+    //    config    list of orbitals occupied for a given configuration
+    //    n         index for electron to be replaced
+    //    a         value of orbital index to occupy with n, i.e.,
+    //              
+    //
+    //  Return: 
+    //    sign      +1/-1 sign depending on number of orbital swaps required to sort
+    //
+    //  
+    //  Complexity: logarithmic in length of config
+    //
+    
+    
+    int sign = 1;
+    vector<int>::const_iterator pos_a_sorted;     // electron index for a in canonical ordering
+    
+    pos_a_sorted = lower_bound(_config.begin(), _config.end(),a);
+
+    int ub = pos_a_sorted-_config.begin();   // upper_bound index
+    int dest;                               // destination index for a
+
+#ifdef DEBUG
+    if( n >= _config.size())
+    {
+        throw std::range_error( "out of range" );
+    };
+#endif
+
+
+    if(ub>n){ 
+        dest = ub-1;
+    }else{ 
+        dest = ub;
+    };
+    
+    if( (dest-n) % 2 == 0){ 
+        sign = 1;
+    }else{
+        sign = -1;
+    };
+    
+    return sign;
+};/*}}}*/
+
+int CombinatorialIndex::calc_single_excitation_sign2(const int& i, const int& a)
+{/*{{{*/
+    //  
+    //  Compute sign required to bring an "excited" active space configuration,
+    //  obtained by finding the index corresponding to orbital i and replacing that
+    //  with a replacing assigning    
+    //
+    //  Input:  
+    //    config    list of orbitals occupied for a given configuration
+    //    i         value of orbital index occupied to replace
+    //    a         value of orbital index to occupy with n, i.e.,
+    //              
+    //
+    //  Return: 
+    //    sign      +1/-1 sign depending on number of orbital swaps required to sort
+    //
+    //  
+    //  Complexity: logarithmic in length of config
+    //
+    
+    
+    vector<int>::const_iterator pos_i_sorted;     // electron index for i in canonical ordering
+    vector<int>::const_iterator pos_a_sorted;     // electron index for a in canonical ordering
+    
+    pos_i_sorted = lower_bound(_config.begin(), _config.end(),i);
+    pos_a_sorted = lower_bound(_config.begin(), _config.end(),a);
+
+    int sign = 1;
+    if(pos_a_sorted > pos_i_sorted){ 
+        if( (pos_a_sorted-pos_i_sorted-1) % 2 != 0) sign = -1;
+    }else{ 
+        if( (pos_a_sorted-pos_i_sorted) % 2 != 0) sign = -1;
+    };
+
+    return sign;
+};/*}}}*/
+
+
+
 

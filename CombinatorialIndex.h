@@ -45,11 +45,16 @@ class CombinatorialIndex
         long int get_max(); ///< Get max of linear index
         vector<int> get_occupied(); ///< Return vector of occupied orbitals for this current value of the index
         vector<int> get_unoccupied(); ///< Return vector of unoccupied orbitals for this current value of the index
-        size_t max() const {return _max;}; 
+        size_t max() const {return _max;}; ///< Get length of index range
+        size_t size() const {return _max;};  ///< Get length of index range
 
         /// Get vector of configuration
         vector<int> config() const {return _config;}; 
 
+
+        int calc_single_excitation_sign(const int& n, const int& a); ///< Get sign obtained after creating single excitation (electron -> a) one string search
+
+        int calc_single_excitation_sign2(const int& i, const int& a); ///< Get sign obtained after creating single excitation (i -> a) two string searches
 };
 
 #endif  

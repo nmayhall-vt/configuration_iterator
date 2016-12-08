@@ -70,6 +70,10 @@ int main ()
         vector<CombinatorialIndex> t_index = p_a_space.get_iterators();
         t_index.at(2).incr();
         t_index.at(7).incr();
+        t_index.at(7).incr();
+        t_index.at(7).incr();
+        t_index.at(7).incr();
+        t_index.at(7).incr();
         //t_index.at(7).incr();
         //t_index.at(3).incr();
         for(int s=0; s<spaces.n_blocks(); s++)
@@ -88,6 +92,12 @@ int main ()
         size_t index; 
         t_index.at(7).single_excitation(1,7,index,sign);
         printf(" Index: %8li Sign: %4i\n",index,sign);
+
+        printf(" +Test loop over single excitations\n");
+        for(int i=0; i<t_index.at(7).config().size(); i++)
+        {
+            cout << t_index.at(7).occ(i) << endl;
+        };
     };
 
     /*

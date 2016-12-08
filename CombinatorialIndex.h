@@ -17,12 +17,23 @@ using namespace std;
 
 class CombinatorialIndex 
 {
+    /*!
+      This implementation of CombinatorialIndex uses a vector<int> as the primary
+      object for describing a configuration. 
+
+      @todo{ 
+      Reimplement this class using bit operations
+      }
+     */
+    
     private:
         int _n_orbs;  
         int _n_elec;  
         vector<int> _scr; ///< scratch vector
-        vector<int> _config;
+        vector<int> _config; ///< vector of orbital indices describing the config
+        vector<int> _vir; ///< vector of orbital indices vacant in config
         void increment_comb(std::vector<int>& list, const int& Mstart, const int& Mend);
+        void decrement_comb(std::vector<int>& list, const int& Mstart, const int& Mend);
         long int calc_nchk(const int&, const int&) const;    // n choose k 
         size_t _max;
 
@@ -37,19 +48,16 @@ class CombinatorialIndex
         //  transformations
         //void operator++(){};
         void incr(); //!< Increment the combinatorial index by one, updating the configuration string
+        void decr(); //!< Decrement the combinatorial index by one, updating the configuration string
         void set_config(const vector<int>&); //!< set the index to specified config
 
         //  computing data
         long int calc_linear_index(); //!< Calculate the linear index
         
         //  accessing data
-        long int get_max(); ///< Get max of linear index
-        vector<int> get_occupied(); ///< Return vector of occupied orbitals for this current value of the index
-        vector<int> get_unoccupied(); ///< Return vector of unoccupied orbitals for this current value of the index
-        ///Get length of index range
-        size_t max() const {return _max;};  
-        ///Get length of index range
-        size_t size() const {return _max;};  
+        int occ(const int&i) const; ///< Get i'th occupied orbital in config
+        int vir(const int&a) const; ///< Get a'th unnoccupied orbital in config 
+        size_t max(); ///< Get length of index range
 
         /// Get vector of configuration
         vector<int> config() const {return _config;}; 

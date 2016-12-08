@@ -16,6 +16,7 @@ CombinatorialIndex::CombinatorialIndex(const int& n_, const int& k_)
     // Start with initial _configuration
     //_config.resize(_n_elec);
     for(int i=0; i<_n_elec; i++) _config.push_back(i); 
+    for(int i=_n_elec; i<_n_orbs; i++) _vir.push_back(i); 
     _scr.resize(_config.size());
 };/*}}}*/
 
@@ -23,6 +24,14 @@ void CombinatorialIndex::incr()
 {/*{{{*/
     /* Increment index */
     increment_comb(_config,0,_n_orbs-1);
+    decrement_comb(_vir,0,_n_orbs-1);
+};/*}}}*/
+
+void CombinatorialIndex::decr()
+{/*{{{*/
+    /* Increment index */
+    decrement_comb(_config,0,_n_orbs-1);
+    increment_comb(_vir,0,_n_orbs-1);
 };/*}}}*/
 
 void CombinatorialIndex::print()
@@ -30,7 +39,7 @@ void CombinatorialIndex::print()
     helpers::print(_config);
 };/*}}}*/
 
-long int CombinatorialIndex::get_max()
+size_t CombinatorialIndex::max()
 {/*{{{*/
     //  
     //  Return n choose k
@@ -54,7 +63,7 @@ long int CombinatorialIndex::calc_nchk(const int& n,const int& k) const
 
 void CombinatorialIndex::increment_comb(std::vector<int>& list, const int& Mstart, const int& Mend)
 {/*{{{*/
-    /*
+    /*!
     Form the next combination of M choose N
     for (Mstart, Mstart+1, Mstart+2,.., Mend) of 
     length N
@@ -73,6 +82,38 @@ void CombinatorialIndex::increment_comb(std::vector<int>& list, const int& Mstar
     };
     return;
 };/*}}}*/
+
+void CombinatorialIndex::decrement_comb(std::vector<int>& list, const int& Mstart, const int& Mend)
+{/*{{{*/
+    /*!
+    Form the previous combination of M choose N
+    for (Mstart, Mstart+1, Mstart+2,.., Mend) of 
+    length N
+    */
+    int N = list.size();
+    for(int i=N-1; i>=0; i--){
+        //helpers::print(list);
+        //cout << list[i] << ","<< list[i-1] << endl;
+        if(list[i] > list[i-1]+1){
+            list[i]--;
+            for(int j=N-1; j>i; j--){
+                list[j] = Mend-((N-1)-j);
+            };
+            return;
+        };
+    };
+    return;
+};/*}}}*/
+
+/*
+void CombinatorialIndex::fill_vir()
+{
+     
+      Return list of empty indices in the current config
+    
+    return ;
+};
+*/
 
 long int CombinatorialIndex::calc_linear_index()
 {/*{{{*/
@@ -360,5 +401,20 @@ void CombinatorialIndex::single_excitation(const int& i, const int& a, size_t& l
     return;
 };/*}}}*/
 
+int CombinatorialIndex::occ(const int& i) const
+{/*{{{*/
+#ifdef DEBUG
+    if(i >= _config.size()) throw std::range_error("occ: i >= _config.size()");
+#endif
+    return _config[i];
+};/*}}}*/
+
+int CombinatorialIndex::vir(const int& a) const
+{/*{{{*/
+#ifdef DEBUG
+    if(a >= _vir.size()) throw std::range_error("occ: i >= _vir.size()");
+#endif
+    return _vir[a];
+};/*}}}*/
 
 

@@ -11,7 +11,10 @@ using namespace arma;
 
 int main ()
 {
-   
+#ifdef DEBUG
+    printf(" Debug mode\n");
+#endif
+
     /* 
     printf(" +Test CombinatorialIndex\n");
     CombinatorialIndex Ik(6,3);
@@ -36,7 +39,7 @@ int main ()
         vector<int> orbital_blocks;
         orbital_blocks.push_back(10);
         orbital_blocks.push_back(10);
-        orbital_blocks.push_back(6);
+        orbital_blocks.push_back(8);
         orbital_blocks.push_back(8);
         orbital_blocks.push_back(20);
         OrbitalSpaces spaces(orbital_blocks);
@@ -47,7 +50,7 @@ int main ()
         vector<int> electron_blocks;
         electron_blocks.push_back(10);
         electron_blocks.push_back(10);
-        electron_blocks.push_back(3);
+        electron_blocks.push_back(4);
         electron_blocks.push_back(0);
         electron_blocks.push_back(0);
         DeterminantSpaces cas_space(spaces, electron_blocks, electron_blocks);
@@ -76,13 +79,15 @@ int main ()
             //cout << t_index.at(s).calc_linear_index() << "," << t_index.at(s+n_blocks).calc_linear_index() << endl;
         };
 
-        printf(" +Test calc_single_excitation_sign\n");
+        printf(" +Test single_excitation\n");
         t_index.at(7).print();
-        cout << t_index.at(7).calc_single_excitation_sign(1,2) << endl;
-        cout << t_index.at(7).calc_single_excitation_sign2(2,2) << endl;
-#ifdef DEBUG
-        printf(" Debug mode\n");
-#endif
+        //cout << t_index.at(7).calc_single_excitation_sign(1,2) << endl;
+        //cout << t_index.at(7).calc_single_excitation_sign2(1,2) << endl;
+        //t_index.at(7).apply_single_excitation(0,4);
+        int sign;
+        size_t index; 
+        t_index.at(7).single_excitation(1,7,index,sign);
+        printf(" Index: %8li Sign: %4i\n",index,sign);
     };
 
     /*

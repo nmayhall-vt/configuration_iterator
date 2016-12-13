@@ -36,6 +36,7 @@ class CombinatorialIndex
         void decrement_comb(std::vector<int>& list, const int& Mstart, const int& Mend);
         long int calc_nchk(const int&, const int&) const;    // n choose k 
         size_t _max;
+        void flip(vector<int>& v, const int& p, const int& q); // swap data in p and q
 
     public:
         /// Default constructor
@@ -47,9 +48,11 @@ class CombinatorialIndex
 
         //  transformations
         //void operator++(){};
-        void incr(); //!< Increment the combinatorial index by one, updating the configuration string
-        void decr(); //!< Decrement the combinatorial index by one, updating the configuration string
+        void incr(); //!< Increment the combinatorial index by one, updating the configuration strings: _config/_vir
+        void decr(); //!< Decrement the combinatorial index by one, updating the configuration strings: _config/_vir
         void set_config(const vector<int>&); //!< set the index to specified config
+        void reset(); //!< Reset configuration back to first index
+        
 
         //  computing data
         long int calc_linear_index(); //!< Calculate the linear index
@@ -60,14 +63,20 @@ class CombinatorialIndex
         size_t max(); ///< Get length of index range
 
         /// Get vector of configuration
-        vector<int> config() const {return _config;}; 
+        vector<int>& config() {return _config;}; 
+        /// Get vector of empty configuration 
+        vector<int>& empty() {return _vir;}; 
 
 
         int calc_single_excitation_sign(const int& n, const int& a); ///< Get sign obtained after creating single excitation (electron -> a) one string search
 
         int calc_single_excitation_sign2(const int& i, const int& a); ///< Get sign obtained after creating single excitation (i -> a) two string searches
-        void apply_single_excitation(const int& i, const int& a); ///< Obtain new configuration after applying single substitution (i->a) 
+        CombinatorialIndex apply_single_excitation(const int& i, const int& a); ///< Obtain new configuration after applying single substitution (i->a) 
         void single_excitation(const int& i, const int& a, size_t& ind, int& sign); 
+        
+        // based on flip
+        void single_excitation2(const int& i, const int& a, size_t& ind, int& sign);    ///< i,a
+        void double_excitation2(const int& i, const int& j, const int& a, const int& b, size_t& ind, int& sign); ///< i,j,a,b
 };
 
 #endif  

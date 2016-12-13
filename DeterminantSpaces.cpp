@@ -84,7 +84,7 @@ void DeterminantSpaces::print()
     {
         size_t block_dim = helpers::nchk(_spaces.block_size_a(b),elec_per_block_a(b)); 
         block_dim = block_dim * helpers::nchk(_spaces.block_size_b(b),elec_per_block_b(b));
-        printf(" %4li    ",block_dim);
+        printf(" %-7li  ",block_dim);
     };
     printf("|\n");
     printf(" Total size| %li",size());

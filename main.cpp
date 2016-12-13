@@ -39,7 +39,7 @@ int main ()
         vector<int> orbital_blocks;
         orbital_blocks.push_back(10);
         orbital_blocks.push_back(10);
-        orbital_blocks.push_back(8);
+        orbital_blocks.push_back(10);
         orbital_blocks.push_back(8);
         orbital_blocks.push_back(20);
         OrbitalSpaces spaces(orbital_blocks);
@@ -67,38 +67,79 @@ int main ()
         p_a_space.print();
         printf("\n");
 
+        
         vector<CombinatorialIndex> t_index = p_a_space.get_iterators();
-        t_index.at(2).incr();
-        t_index.at(7).incr();
-        t_index.at(7).incr();
-        t_index.at(7).incr();
-        t_index.at(7).incr();
-        t_index.at(7).incr();
-        //t_index.at(7).incr();
-        //t_index.at(3).incr();
-        for(int s=0; s<spaces.n_blocks(); s++)
+        printf(" +Test incr()/decr()\n");
         {
-            int n_blocks = spaces.n_blocks();
-            helpers::print( t_index.at(s).config(), t_index.at(s+spaces.n_blocks()).config() );
-            //cout << t_index.at(s).calc_linear_index() << "," << t_index.at(s+n_blocks).calc_linear_index() << endl;
+            t_index.at(2).incr();
+            CombinatorialIndex& config = t_index.at(7);
+            for(int i=0; i<t_index.at(7).max(); i++)
+            {
+                config.incr();
+                //helpers::print(config.config());
+                //helpers::print(config.empty());
+                //printf("\n");
+            };
+            printf("\n");
+            for(int i=0; i<t_index.at(7).max(); i++)
+            {
+                config.decr(); 
+            };
+            //t_index.at(7).incr();
+            //t_index.at(3).incr();
+            for(int s=0; s<spaces.n_blocks(); s++)
+            {
+                int n_blocks = spaces.n_blocks();
+                helpers::print( t_index.at(s).config(), t_index.at(s+spaces.n_blocks()).config() );
+                //cout << t_index.at(s).calc_linear_index() << "," << t_index.at(s+n_blocks).calc_linear_index() << endl;
+            };
         };
-
         printf(" +Test single_excitation\n");
-        t_index.at(7).print();
-        //cout << t_index.at(7).calc_single_excitation_sign(1,2) << endl;
-        //cout << t_index.at(7).calc_single_excitation_sign2(1,2) << endl;
-        //t_index.at(7).apply_single_excitation(0,4);
         int sign;
         size_t index; 
-        t_index.at(7).single_excitation(1,7,index,sign);
-        printf(" Index: %8li Sign: %4i\n",index,sign);
-
         printf(" +Test loop over single excitations\n");
-        for(int i=0; i<t_index.at(7).config().size(); i++)
-        {
-            cout << t_index.at(7).occ(i) << endl;
+        { 
+            CombinatorialIndex& Ik = t_index.at(7);
+            Ik.print();
+            Ik.reset();
+
+            for(size_t I=0; I<Ik.max(); I++)
+            {
+                Ik.print();
+                printf(" %8li -> ",I);
+                //helpers::print(Ik.empty());
+                for(int i=0; i<Ik.config().size(); i++)
+                {
+                    for(int a=0; a<Ik.empty().size(); a++)
+                    {
+                        /*
+                        Ik.single_excitation(Ik.occ(i),Ik.vir(a),index,sign);
+                        //printf("i,a: %4i %4i\n",i,a);
+                        size_t index2 = 0;
+                        int sign2 = 1;
+                        Ik.single_excitation2(i,a,index2,sign2);
+                        if (index2 != index) throw std::range_error("not the same");
+                        if (sign2 != sign) throw std::range_error("not the same");
+                        */
+                        Ik.single_excitation2(i,a,index,sign);
+                        printf(" %4li",index);
+                        for(int j=i+1; j<Ik.config().size(); j++)
+                        {
+                            for(int b=a+1; b<Ik.empty().size(); b++)
+                            {
+                                //Ik.single_excitation(Ij.occ(j),Ij.vir(b),index,sign);
+                                //printf(" %4li",index);
+                                Ik.double_excitation2(i,j,a,b,index,sign);
+                                printf(" %4li",index);
+                            };
+                        };
+                    };
+                };
+                Ik.incr();
+                printf("\n");
+            };
         };
-    };
+        };
 
     /*
     printf(" +Test armadillo linking\n");

@@ -157,7 +157,194 @@ void CombinatorialIndex::set_config(const vector<int>& config)
     };
 };/*}}}*/
 
+void CombinatorialIndex::single_excitation2(const int& i, const int& a, size_t& lin_index, int& sign)
+{/*{{{*/
+    //  
+    //  Compute sign required to bring an "excited" active space configuration,
+    //  obtained by finding the index corresponding to orbital i and replacing that
+    //  with a replacing assigning    
+    //
+    //  Input:  
+    //    config    list of orbitals occupied for a given configuration
+    //    i         value of orbital index occupied to replace
+    //    a         value of orbital index to occupy with n, i.e.,
+    //              
+    //
+    //  Return: 
+    //    sign      +1/-1 sign depending on number of orbital swaps required to sort
+    //
+    //  
+    //  Complexity: logarithmic in length of config
+    //
+    
+#ifdef DEBUG
+    //
+    //  Check ranges
+    if( a >= _vir.size()) throw std::range_error( "a >= _vir");
+    if( i >= _config.size()) throw std::range_error( "a >= _config");
+#endif
+    _scr = _config;
+    _scr[i] = _vir[a];
+    
+    //printf("      ");
+    //helpers::print(_scr); 
 
+    sign = 1;
+    for(int i=1; i<_scr.size(); )
+    {
+        if(_scr[i] < _scr[i-1])
+        {
+            flip(_scr,i,i-1);
+            sign = -sign;
+            i = min(i-1,1);
+            //i = 1;
+            continue;
+        };
+        i++;
+    };
+    //printf(" %4i ",sign);
+    //helpers::print(_scr); 
+    //printf("\n");
+    
+    //  taken from calc_linear_index
+    lin_index = 0;
+
+    int v_prev = -1;
+
+    for(int i=0; i<_scr.size(); i++){
+        int v = _scr[i];
+        int M = _n_orbs - v;
+        int N = _scr.size() - i - 1;
+        int w = v - v_prev - 1;
+        //todo: change mchn from function call to data lookup!
+        for(int j=0; j<w; j++){
+            lin_index += calc_nchk(M+j,N);
+        };
+        v_prev = v;
+    };
+    return;
+};/*}}}*/
+
+void CombinatorialIndex::double_excitation2(const int& i, const int& j, const int& a, const int& b, size_t& lin_index, int& sign)
+{/*{{{*/
+    //  
+    //  Compute sign required to bring an "excited" active space configuration,
+    //  obtained by finding the index corresponding to orbital i and replacing that
+    //  with a replacing assigning    
+    //
+    //  Input:  
+    //    config    list of orbitals occupied for a given configuration
+    //    i         value of orbital index occupied to replace
+    //    a         value of orbital index to occupy with n, i.e.,
+    //              
+    //
+    //  Return: 
+    //    sign      +1/-1 sign depending on number of orbital swaps required to sort
+    //
+    //  
+    //  Complexity: logarithmic in length of config
+    //
+    
+#ifdef DEBUG
+    //
+    //  Check ranges
+    if( a >= _vir.size()) throw std::range_error( "a >= _vir");
+    if( b >= _vir.size()) throw std::range_error( "b >= _vir");
+    if( i >= _config.size()) throw std::range_error( "i >= _config");
+    if( j >= _config.size()) throw std::range_error( "i >= _config");
+    if( j <= i) throw std::range_error( "j <= i");
+    if( b <= a) throw std::range_error( "b <= a");
+#endif
+    _scr = _config;
+    _scr[i] = _vir[a];
+    _scr[j] = _vir[b];
+   
+    /* 
+    printf("      ");
+    helpers::print(_scr); 
+    */
+
+    sign = 1;
+    for(int i=1; i<_scr.size(); )
+    {
+        if(_scr[i] < _scr[i-1])
+        {
+            flip(_scr,i,i-1);
+            sign = -sign;
+            i = min(i-1,1);
+            //i = 1;
+            continue;
+        };
+        i++;
+    };
+
+#ifdef DEBUG
+    // double check sorting
+    for(int i=1; i<_scr.size(); i++) if(_scr[i] < _scr[i-1]) throw std::runtime_error("string not sorted");
+#endif
+   
+    /* 
+    printf(" %4i ",sign);
+    helpers::print(_scr); 
+    printf("\n");
+    */
+    
+    //  taken from calc_linear_index
+    lin_index = 0;
+
+    int v_prev = -1;
+
+    for(int i=0; i<_scr.size(); i++){
+        int v = _scr[i];
+        int M = _n_orbs - v;
+        int N = _scr.size() - i - 1;
+        int w = v - v_prev - 1;
+        //todo: change mchn from function call to data lookup!
+        for(int j=0; j<w; j++){
+            lin_index += calc_nchk(M+j,N);
+        };
+        v_prev = v;
+    };
+    return;
+};/*}}}*/
+
+int CombinatorialIndex::occ(const int& i) const
+{/*{{{*/
+#ifdef DEBUG
+    if(i >= _config.size()) throw std::range_error("occ: i >= _config.size()");
+#endif
+    return _config[i];
+};/*}}}*/
+
+int CombinatorialIndex::vir(const int& a) const
+{/*{{{*/
+#ifdef DEBUG
+    if(a >= _vir.size()) throw std::range_error("occ: i >= _vir.size()");
+#endif
+    return _vir[a];
+};/*}}}*/
+
+void CombinatorialIndex::flip(vector<int>& v, const int& p, const int& q)
+{/*{{{*/
+#ifdef DEBUG
+    if(p >= _vir.size()) throw std::range_error("in flip");
+    if(q >= _vir.size()) throw std::range_error("in flip");
+    if(p < 0) throw std::range_error("negative in flip");
+    if(q < 0) throw std::range_error("negative in flip");
+#endif
+    int tmp = v[p];
+    v[p] = v[q];
+    v[q] = tmp;
+    return;
+};/*}}}*/
+
+
+
+
+
+
+
+/* ================================================== Obsolescent =======================================*/
 int CombinatorialIndex::calc_single_excitation_sign(const int& n, const int& a)
 {/*{{{*/
     //  
@@ -408,173 +595,3 @@ void CombinatorialIndex::single_excitation(const int& i, const int& a, size_t& l
     return;
 };/*}}}*/
 
-void CombinatorialIndex::single_excitation2(const int& i, const int& a, size_t& lin_index, int& sign)
-{/*{{{*/
-    //  
-    //  Compute sign required to bring an "excited" active space configuration,
-    //  obtained by finding the index corresponding to orbital i and replacing that
-    //  with a replacing assigning    
-    //
-    //  Input:  
-    //    config    list of orbitals occupied for a given configuration
-    //    i         value of orbital index occupied to replace
-    //    a         value of orbital index to occupy with n, i.e.,
-    //              
-    //
-    //  Return: 
-    //    sign      +1/-1 sign depending on number of orbital swaps required to sort
-    //
-    //  
-    //  Complexity: logarithmic in length of config
-    //
-    
-#ifdef DEBUG
-    //
-    //  Check ranges
-    if( a >= _vir.size()) throw std::range_error( "a >= _vir");
-    if( i >= _config.size()) throw std::range_error( "a >= _config");
-#endif
-    _scr = _config;
-    _scr[i] = _vir[a];
-    
-    //printf("      ");
-    //helpers::print(_scr); 
-
-    sign = 1;
-    for(int i=1; i<_scr.size(); )
-    {
-        if(_scr[i] < _scr[i-1])
-        {
-            flip(_scr,i,i-1);
-            sign = -sign;
-            i = min(i-1,1);
-            //i = 1;
-            continue;
-        };
-        i++;
-    };
-    //printf(" %4i ",sign);
-    //helpers::print(_scr); 
-    //printf("\n");
-    
-    //  taken from calc_linear_index
-    lin_index = 0;
-
-    int v_prev = -1;
-
-    for(int i=0; i<_scr.size(); i++){
-        int v = _scr[i];
-        int M = _n_orbs - v;
-        int N = _scr.size() - i - 1;
-        int w = v - v_prev - 1;
-        //todo: change mchn from function call to data lookup!
-        for(int j=0; j<w; j++){
-            lin_index += calc_nchk(M+j,N);
-        };
-        v_prev = v;
-    };
-    return;
-};/*}}}*/
-
-void CombinatorialIndex::double_excitation2(const int& i, const int& j, const int& a, const int& b, size_t& lin_index, int& sign)
-{/*{{{*/
-    //  
-    //  Compute sign required to bring an "excited" active space configuration,
-    //  obtained by finding the index corresponding to orbital i and replacing that
-    //  with a replacing assigning    
-    //
-    //  Input:  
-    //    config    list of orbitals occupied for a given configuration
-    //    i         value of orbital index occupied to replace
-    //    a         value of orbital index to occupy with n, i.e.,
-    //              
-    //
-    //  Return: 
-    //    sign      +1/-1 sign depending on number of orbital swaps required to sort
-    //
-    //  
-    //  Complexity: logarithmic in length of config
-    //
-    
-#ifdef DEBUG
-    //
-    //  Check ranges
-    if( a >= _vir.size()) throw std::range_error( "a >= _vir");
-    if( b >= _vir.size()) throw std::range_error( "b >= _vir");
-    if( i >= _config.size()) throw std::range_error( "i >= _config");
-    if( j >= _config.size()) throw std::range_error( "i >= _config");
-    if( j <= i) throw std::range_error( "j <= i");
-    if( b <= a) throw std::range_error( "b <= a");
-#endif
-    _scr = _config;
-    _scr[i] = _vir[a];
-    _scr[j] = _vir[b];
-    
-    //printf("      ");
-    //helpers::print(_scr); 
-
-    sign = 1;
-    for(int i=1; i<_scr.size(); )
-    {
-        if(_scr[i] < _scr[i-1])
-        {
-            flip(_scr,i,i-1);
-            sign = -sign;
-            i = min(i-1,1);
-            //i = 1;
-            continue;
-        };
-        i++;
-    };
-    //printf(" %4i ",sign);
-    //helpers::print(_scr); 
-    //printf("\n");
-    
-    //  taken from calc_linear_index
-    lin_index = 0;
-
-    int v_prev = -1;
-
-    for(int i=0; i<_scr.size(); i++){
-        int v = _scr[i];
-        int M = _n_orbs - v;
-        int N = _scr.size() - i - 1;
-        int w = v - v_prev - 1;
-        //todo: change mchn from function call to data lookup!
-        for(int j=0; j<w; j++){
-            lin_index += calc_nchk(M+j,N);
-        };
-        v_prev = v;
-    };
-    return;
-};/*}}}*/
-
-int CombinatorialIndex::occ(const int& i) const
-{/*{{{*/
-#ifdef DEBUG
-    if(i >= _config.size()) throw std::range_error("occ: i >= _config.size()");
-#endif
-    return _config[i];
-};/*}}}*/
-
-int CombinatorialIndex::vir(const int& a) const
-{/*{{{*/
-#ifdef DEBUG
-    if(a >= _vir.size()) throw std::range_error("occ: i >= _vir.size()");
-#endif
-    return _vir[a];
-};/*}}}*/
-
-void CombinatorialIndex::flip(vector<int>& v, const int& p, const int& q)
-{/*{{{*/
-#ifdef DEBUG
-    if(p >= _vir.size()) throw std::range_error("in flip");
-    if(q >= _vir.size()) throw std::range_error("in flip");
-    if(p < 0) throw std::range_error("negative in flip");
-    if(q < 0) throw std::range_error("negative in flip");
-#endif
-    int tmp = v[p];
-    v[p] = v[q];
-    v[q] = tmp;
-    return;
-};/*}}}*/

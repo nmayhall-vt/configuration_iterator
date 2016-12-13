@@ -50,7 +50,7 @@ int main ()
         vector<int> electron_blocks;
         electron_blocks.push_back(10);
         electron_blocks.push_back(10);
-        electron_blocks.push_back(4);
+        electron_blocks.push_back(5);
         electron_blocks.push_back(0);
         electron_blocks.push_back(0);
         DeterminantSpaces cas_space(spaces, electron_blocks, electron_blocks);
@@ -112,17 +112,7 @@ int main ()
                 {
                     for(int a=0; a<Ik.empty().size(); a++)
                     {
-                        /*
-                        Ik.single_excitation(Ik.occ(i),Ik.vir(a),index,sign);
-                        //printf("i,a: %4i %4i\n",i,a);
-                        size_t index2 = 0;
-                        int sign2 = 1;
-                        Ik.single_excitation2(i,a,index2,sign2);
-                        if (index2 != index) throw std::range_error("not the same");
-                        if (sign2 != sign) throw std::range_error("not the same");
-                        */
                         Ik.single_excitation2(i,a,index,sign);
-                        printf(" %4li",index);
                         for(int j=i+1; j<Ik.config().size(); j++)
                         {
                             for(int b=a+1; b<Ik.empty().size(); b++)

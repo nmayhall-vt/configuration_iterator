@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include "CombinatorialIndex.h"
-#include "DeterminantSpaces.h"
+#include "DeterminantSpace.h"
+#include "Determinant.h"
 #include "OrbitalSpaces.h"
 #include <armadillo>
 
@@ -46,19 +47,19 @@ int main ()
         spaces.print();
         printf("\n");
 
-        printf(" +Test DeterminantSpaces Class\n");
+        printf(" +Test DeterminantSpace Class\n");
         vector<int> electron_blocks;
         electron_blocks.push_back(10);
         electron_blocks.push_back(10);
         electron_blocks.push_back(5);
         electron_blocks.push_back(0);
         electron_blocks.push_back(0);
-        DeterminantSpaces cas_space(spaces, electron_blocks, electron_blocks);
+        DeterminantSpace cas_space(spaces, electron_blocks, electron_blocks);
         cas_space.print();
         printf("\n");
 
         printf("   get alpha particle space\n");
-        DeterminantSpaces p_a_space;
+        DeterminantSpace p_a_space;
         p_a_space = cas_space;
         p_a_space.elec_per_block_a(3) += 1;
         p_a_space.elec_per_block_a(2) -= 1;
@@ -69,6 +70,10 @@ int main ()
 
         
         vector<CombinatorialIndex> t_index = p_a_space.get_iterators();
+        Determinant p_a(p_a_space);
+        p_a.print();
+        return 0;
+
         printf(" +Test incr()/decr()\n");
         {
             t_index.at(2).incr();

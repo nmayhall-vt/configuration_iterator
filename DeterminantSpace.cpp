@@ -1,6 +1,6 @@
-#include "DeterminantSpaces.h"
+#include "DeterminantSpace.h"
 
-DeterminantSpaces::DeterminantSpaces(
+DeterminantSpace::DeterminantSpace(
         OrbitalSpaces spaces, 
         const vector<int>& elec_blocks_a,
         const vector<int>& elec_blocks_b)
@@ -17,6 +17,7 @@ DeterminantSpaces::DeterminantSpaces(
     _n_blocks = _spaces.n_blocks();
     _elec_per_block_a = elec_blocks_a;
     _elec_per_block_b = elec_blocks_b;
+    _global_offset = 0;
     
     _n_alpha = 0;
     for(int b=0; b<_elec_per_block_a.size(); b++)
@@ -33,7 +34,7 @@ DeterminantSpaces::DeterminantSpaces(
     _n_orbs = _spaces.n_orbs();
 };/*}}}*/
 
-vector<CombinatorialIndex> DeterminantSpaces::get_iterators()
+vector<CombinatorialIndex> DeterminantSpace::get_iterators()
 {/*{{{*/
     vector<CombinatorialIndex> tensor_index;
     for(int b=0; b<_n_blocks; b++)
@@ -49,7 +50,7 @@ vector<CombinatorialIndex> DeterminantSpaces::get_iterators()
     return tensor_index;
 };/*}}}*/
 
-void DeterminantSpaces::calc_size()
+void DeterminantSpace::calc_size()
 {/*{{{*/
     _size = 1; 
     for(int b=0; b<_n_blocks; b++)
@@ -59,7 +60,7 @@ void DeterminantSpaces::calc_size()
     };
 };/*}}}*/
 
-void DeterminantSpaces::print()
+void DeterminantSpace::print()
 {/*{{{*/
     printf(" Orbitals  |");
     for(int b=0; b<_n_blocks; b++)
@@ -90,4 +91,5 @@ void DeterminantSpaces::print()
     printf(" Total size| %li",size());
     printf("\n");
 };/*}}}*/
+
 

@@ -5,6 +5,7 @@ add_definitions(-DDEBUG)
 add_executable(configuration_iterator 
 	main.cpp 
 	CombinatorialIndex.cpp 
-	DeterminantSpaces.cpp 
+	DeterminantSpace.cpp 
+	Determinant.cpp 
 	OrbitalSpaces.cpp
 	helpers.cpp)

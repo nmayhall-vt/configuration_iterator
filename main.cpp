@@ -65,27 +65,30 @@ int main ()
         */
         p_a_space.elec_per_block_a(3) += 1;
         p_a_space.elec_per_block_a(2) -= 1;
-        p_a_space.elec_per_block_b(3) += 1;
-        p_a_space.elec_per_block_b(1) -= 1;
+        //p_a_space.elec_per_block_b(3) += 1;
+        //p_a_space.elec_per_block_b(1) -= 1;
         p_a_space.print();
         printf("\n");
 
         
         vector<CombinatorialIndex> t_index = p_a_space.get_iterators();
         Determinant p_a(p_a_space);
-        p_a.print();
-        int a = 0;
-        for(size_t i=0; i<p_a.size()-1; i++)
+        printf(" +Test Determinant::incr()/decr()\n");
         {
-            p_a.incr();
-            a = 3;
-            //p_a.print();
+            p_a.print();
+            int a = 0;
+            for(size_t i=0; i<p_a.size()-10; i++)
+            {
+                p_a.incr();
+                a = 3;
+                //p_a.print();
+            };
+            p_a.print();
+            cout << p_a.calc_linear_index() << endl;
         };
-        p_a.print();
-        cout << p_a.calc_linear_index() << endl;
-        return 0;
 
         printf(" +Test incr()/decr()\n");
+        if(0)
         {
             t_index.at(2).incr();
             CombinatorialIndex& config = t_index.at(7);
@@ -110,11 +113,11 @@ int main ()
                 //cout << t_index.at(s).calc_linear_index() << "," << t_index.at(s+n_blocks).calc_linear_index() << endl;
             };
         };
-        printf(" +Test single_excitation\n");
-        int sign;
-        size_t index; 
-        printf(" +Test loop over single excitations\n");
+        if(0)
         { 
+            int sign;
+            size_t index; 
+            printf(" +Test loop over double excitations\n");
             CombinatorialIndex& Ik = t_index.at(7);
             Ik.print();
             Ik.reset();
@@ -145,7 +148,39 @@ int main ()
                 printf("\n");
             };
         };
+        printf(" +Test double excitations in Determinant\n");
+        {
+            p_a.print();
+            int a = 0;
+            int p=2;
+            int q=2;
+            int r=2;
+            int s=2;
+            CombinatorialIndex& Ip = p_a.get_block_index(p);
+            CombinatorialIndex& Iq = p_a.get_block_index(q);
+            CombinatorialIndex& Ir = p_a.get_block_index(r);
+            CombinatorialIndex& Is = p_a.get_block_index(s);
+            //for(size_t I=0; I<p_a.size()-1; I++)
+            if(p=r) // p->r is within one block
+            {
+                for(size_t I=0; I<3; I++)
+                {
+                    for(int i=0; i<Ip.config().size(); i++)
+                    {
+                        for(int a=0; a<Ir.empty().size(); a++)
+                        {
+                            // todo
+                            //p_a.single_excitation2(i,a,index,sign);
+                        };
+                    };
+
+                    p_a.incr();
+                    a = 3;
+
+                };
+            };
         };
+    };
 
     /*
     printf(" +Test armadillo linking\n");

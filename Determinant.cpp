@@ -54,9 +54,8 @@ size_t Determinant::calc_linear_index()
     return _lin_index + _space.global_offset();
 };/*}}}*/
 
-//todo
 void Determinant::incr()
-{
+{/*{{{*/
     for(int i=_space.n_blocks()*2-1; i>-1; i--)
     {
         //printf("j: %4i %4i %4i\n",i,_block_indices.at(i).linear_index(),_block_indices.at(i).max()-1);
@@ -76,6 +75,7 @@ void Determinant::incr()
         };
     }; 
     
-};
+};/*}}}*/
 
+//todo
 void Determinant::decr(){};

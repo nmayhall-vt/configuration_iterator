@@ -50,6 +50,8 @@ class Determinant
         void reset(); //!< Reset configuration back to first index
         const size_t size(){return _size;}; //!<  Number of configs in space
         
+        CombinatorialIndex& get_block_index(const int& i){return _block_indices.at(i);}; //!<  Get reference to a specific block index 
+        
 
         //  computing data
         size_t calc_linear_index(); //!< Calculate the linear index

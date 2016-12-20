@@ -18,13 +18,18 @@ CombinatorialIndex::CombinatorialIndex(const int& n_, const int& k_)
     for(int i=0; i<_n_elec; i++) _config.push_back(i); 
     for(int i=_n_elec; i<_n_orbs; i++) _vir.push_back(i); 
     _scr.resize(_config.size());
+    _vir_reset = _vir;
+    _config_reset = _config;
 };/*}}}*/
 
 void CombinatorialIndex::reset()
 {/*{{{*/
     /* Increment index */
-    for(int i=0; i<_n_elec; i++) _config.at(i)=i; 
-    for(int i=0; i<_n_orbs-_n_elec; i++) _vir.at(i) = i+_n_elec; 
+    //for(int i=0; i<_n_elec; i++) _config.at(i)=i; 
+    //for(int i=0; i<_n_orbs-_n_elec; i++) _vir.at(i) = i+_n_elec; 
+    _config = _config_reset;
+    _vir = _vir_reset;
+    _lin_index = 0;
 };/*}}}*/
 
 void CombinatorialIndex::incr()
@@ -32,6 +37,7 @@ void CombinatorialIndex::incr()
     /* Increment index */
     increment_comb(_config,0,_n_orbs-1);
     decrement_comb(_vir,0,_n_orbs-1);
+    _lin_index += 1;
 };/*}}}*/
 
 void CombinatorialIndex::decr()
@@ -39,6 +45,7 @@ void CombinatorialIndex::decr()
     /* Increment index */
     decrement_comb(_config,0,_n_orbs-1);
     increment_comb(_vir,0,_n_orbs-1);
+    _lin_index -= 1;
 };/*}}}*/
 
 void CombinatorialIndex::print()
@@ -119,14 +126,14 @@ void CombinatorialIndex::decrement_comb(std::vector<int>& list, const int& Mstar
     return;
 };/*}}}*/
 
-long int CombinatorialIndex::calc_linear_index()
+const size_t& CombinatorialIndex::calc_linear_index()
 {/*{{{*/
    /* 
       Return linear index for lexically ordered _config string
       */
     
 
-    int lin_index = 0;
+    _lin_index = 0;
 
     int v_prev = -1;
 
@@ -137,11 +144,11 @@ long int CombinatorialIndex::calc_linear_index()
         int w = v - v_prev - 1;
         //todo: change mchn from function call to data lookup!
         for(int j=0; j<w; j++){
-            lin_index += calc_nchk(M+j,N);
+            _lin_index += calc_nchk(M+j,N);
         };
         v_prev = v;
     };
-    return lin_index;
+    return _lin_index;
 };/*}}}*/
 
 void CombinatorialIndex::set_config(const vector<int>& config)
@@ -422,8 +429,8 @@ int CombinatorialIndex::calc_single_excitation_sign2(const int& i, const int& a)
     int present = 0;
     for(int j=0; j<_config.size(); j++)
     {
-        if(_config.at(j) == i) present +=1;
-        if(_config.at(j) == a) throw std::range_error( "out of range: i");
+        if(_config[j] == i) present +=1;
+        if(_config[j] == a) throw std::range_error( "out of range: i");
     };
     if(present == 0) throw std::range_error(" i not found");
     if(i >= _n_orbs) throw std::range_error(" i > _n_orbs");
@@ -474,9 +481,9 @@ CombinatorialIndex CombinatorialIndex::apply_single_excitation(const int& i, con
     int a_loc = -1;
     for(int j=0; j<_scr.size(); j++)
     {
-        if(_scr.at(j) == i) i_loc = j;
-        if(_scr.at(j) == a) throw std::range_error(" a already here"); 
-        if(_scr.at(j) == a) throw std::range_error(" a already here"); 
+        if(_scr[j] == i) i_loc = j;
+        if(_scr[j] == a) throw std::range_error(" a already here"); 
+        if(_scr[j] == a) throw std::range_error(" a already here"); 
     };
     /*
     for(int j=0; j<_vir.size(); j++)
@@ -488,7 +495,7 @@ CombinatorialIndex CombinatorialIndex::apply_single_excitation(const int& i, con
     */
     if(i_loc == -1) throw std::range_error(" i not found");
     
-    _scr.at(i_loc) = a;                          // make i -> a replacement
+    _scr[i_loc] = a;                          // make i -> a replacement
     sort(_scr.begin(), _scr.end());           // sort resulting string
 
     CombinatorialIndex tmp(_n_orbs, _n_elec);

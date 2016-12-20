@@ -30,12 +30,15 @@ class CombinatorialIndex
         int _n_orbs;  
         int _n_elec;  
         vector<int> _scr; ///< scratch vector
+        vector<int> _config_reset; ///< store original config 
+        vector<int> _vir_reset; ///< store original config 
         vector<int> _config; ///< vector of orbital indices describing the config
         vector<int> _vir; ///< vector of orbital indices vacant in config
         void increment_comb(std::vector<int>& list, const int& Mstart, const int& Mend);
         void decrement_comb(std::vector<int>& list, const int& Mstart, const int& Mend);
         long int calc_nchk(const int&, const int&) const;    // n choose k 
         size_t _max;
+        size_t _lin_index; ///< Current linear index
         void flip(vector<int>& v, const int& p, const int& q); // swap data in p and q
 
     public:
@@ -55,7 +58,8 @@ class CombinatorialIndex
         
 
         //  computing data
-        long int calc_linear_index(); //!< Calculate the linear index
+        const size_t& calc_linear_index(); //!< Calculate the linear index
+        const size_t& linear_index() {return _lin_index;};      //!< Retrieve the linear index
         
         //  accessing data
         int occ(const int&i) const; ///< Get i'th occupied orbital in config

@@ -15,6 +15,7 @@ Determinant::Determinant(DeterminantSpace& space)
         CombinatorialIndex beta(_space.orb_spaces().block_size_b(b), _space.elec_per_block_b(b));
         _block_indices.push_back(beta);
     };
+    _size = _space.size();
 };/*}}}*/
 
 
@@ -23,7 +24,8 @@ void Determinant::print()
     printf(" Determinant:  %12li\n",calc_linear_index());
     for(int b=0; b<_space.orb_spaces().n_blocks(); b++)
     {
-        _block_indices.at(b).print();
+        printf(" ");
+        helpers::print(_block_indices.at(b).config(),_block_indices.at(b+_space.n_blocks()).config());
     };
     printf("\n");
 };/*}}}*/
@@ -45,7 +47,6 @@ size_t Determinant::calc_linear_index()
     size_t offset = 1;
     for(int i=_space.n_blocks()*2-1; i>-1; i--)
     {
-        printf(" i %4i\n",i);
         //_block_indices.at(i).print();
         _lin_index += _block_indices.at(i).calc_linear_index() * offset;
         offset = offset * _block_indices.at(i).max();
@@ -54,5 +55,27 @@ size_t Determinant::calc_linear_index()
 };/*}}}*/
 
 //todo
-void Determinant::incr(){};
+void Determinant::incr()
+{
+    for(int i=_space.n_blocks()*2-1; i>-1; i--)
+    {
+        //printf("j: %4i %4i %4i\n",i,_block_indices.at(i).linear_index(),_block_indices.at(i).max()-1);
+        //_block_indices.at(i).print();
+        //printf(" %4i\n",_block_indices.at(i).linear_index());
+        //printf(" %4i\n",_block_indices.at(i).max());
+        if(_block_indices.at(i).linear_index() == _block_indices.at(i).max()-1)
+        {
+            _block_indices.at(i).reset();
+            //_block_indices.at(i).print();
+        }
+        else
+        {
+            _block_indices.at(i).incr();
+            _lin_index += 1;
+            break;
+        };
+    }; 
+    
+};
+
 void Determinant::decr(){};

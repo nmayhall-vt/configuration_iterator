@@ -34,6 +34,7 @@ class Determinant
         vector<CombinatorialIndex> _block_indices;
         DeterminantSpace _space;
         size_t _lin_index;
+        size_t _size;
 
     public:
         /// Default constructor
@@ -47,6 +48,7 @@ class Determinant
         void decr(); //!< Decrement the combinatorial index by one, updating the configuration strings: _config/_vir
         void set_config(const vector<int>&); //!< set the index to specified config
         void reset(); //!< Reset configuration back to first index
+        const size_t size(){return _size;}; //!<  Number of configs in space
         
 
         //  computing data

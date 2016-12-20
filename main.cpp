@@ -40,9 +40,9 @@ int main ()
         vector<int> orbital_blocks;
         orbital_blocks.push_back(10);
         orbital_blocks.push_back(10);
-        orbital_blocks.push_back(10);
         orbital_blocks.push_back(8);
-        orbital_blocks.push_back(20);
+        orbital_blocks.push_back(40);
+        orbital_blocks.push_back(40);
         OrbitalSpaces spaces(orbital_blocks);
         spaces.print();
         printf("\n");
@@ -51,7 +51,7 @@ int main ()
         vector<int> electron_blocks;
         electron_blocks.push_back(10);
         electron_blocks.push_back(10);
-        electron_blocks.push_back(5);
+        electron_blocks.push_back(4);
         electron_blocks.push_back(0);
         electron_blocks.push_back(0);
         DeterminantSpace cas_space(spaces, electron_blocks, electron_blocks);
@@ -61,6 +61,8 @@ int main ()
         printf("   get alpha particle space\n");
         DeterminantSpace p_a_space;
         p_a_space = cas_space;
+        /*
+        */
         p_a_space.elec_per_block_a(3) += 1;
         p_a_space.elec_per_block_a(2) -= 1;
         p_a_space.elec_per_block_b(3) += 1;
@@ -72,6 +74,15 @@ int main ()
         vector<CombinatorialIndex> t_index = p_a_space.get_iterators();
         Determinant p_a(p_a_space);
         p_a.print();
+        int a = 0;
+        for(size_t i=0; i<p_a.size()-1; i++)
+        {
+            p_a.incr();
+            a = 3;
+            //p_a.print();
+        };
+        p_a.print();
+        cout << p_a.calc_linear_index() << endl;
         return 0;
 
         printf(" +Test incr()/decr()\n");

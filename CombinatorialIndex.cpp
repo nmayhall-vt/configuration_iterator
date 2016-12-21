@@ -166,23 +166,21 @@ void CombinatorialIndex::set_config(const vector<int>& config)
 
 void CombinatorialIndex::single_excitation2(const int& i, const int& a, size_t& lin_index, int& sign)
 {/*{{{*/
-    //  
-    //  Compute sign required to bring an "excited" active space configuration,
-    //  obtained by finding the index corresponding to orbital i and replacing that
-    //  with a replacing assigning    
-    //
-    //  Input:  
-    //    config    list of orbitals occupied for a given configuration
-    //    i         value of orbital index occupied to replace
-    //    a         value of orbital index to occupy with n, i.e.,
-    //              
-    //
-    //  Return: 
-    //    sign      +1/-1 sign depending on number of orbital swaps required to sort
-    //
-    //  
-    //  Complexity: logarithmic in length of config
-    //
+    ///  
+    ///  Compute sign required to bring an "excited" active space configuration,
+    ///  obtained by replacing the orbital index corresponding to electron i and replacing that
+    ///  with the orbital index associated with the a'th 'hole'  
+    ///
+    ///  Input:  
+    ///    config    list of orbitals occupied for a given configuration
+    ///    i         electron index in configuration to replace
+    ///    a         virtual index in configuration to now occupy
+    ///              
+    ///
+    ///  Return: 
+    ///    sign      +1/-1 sign depending on number of orbital swaps required to sort
+    ///
+    ///
     
 #ifdef DEBUG
     //
@@ -234,23 +232,22 @@ void CombinatorialIndex::single_excitation2(const int& i, const int& a, size_t& 
 
 void CombinatorialIndex::double_excitation2(const int& i, const int& j, const int& a, const int& b, size_t& lin_index, int& sign)
 {/*{{{*/
-    //  
-    //  Compute sign required to bring an "excited" active space configuration,
-    //  obtained by finding the index corresponding to orbital i and replacing that
-    //  with a replacing assigning    
-    //
-    //  Input:  
-    //    config    list of orbitals occupied for a given configuration
-    //    i         value of orbital index occupied to replace
-    //    a         value of orbital index to occupy with n, i.e.,
-    //              
-    //
-    //  Return: 
-    //    sign      +1/-1 sign depending on number of orbital swaps required to sort
-    //
-    //  
-    //  Complexity: logarithmic in length of config
-    //
+    ///  
+    ///  Compute sign required to bring an "excited" active space configuration,
+    ///  obtained by replacing the orbital index corresponding to orbitals i and j 
+    ///  with the orbital indices corresponding to the a'th and b'th unoccupied sites
+    ///
+    ///  Input:  
+    ///    i         electron index in configuration to replace
+    ///    j         electron index in configuration to replace
+    ///    a         virtual index in configuration to now occupy
+    ///    b         virtual index in configuration to now occupy
+    ///              
+    ///
+    ///  Return: 
+    ///    sign      +1/-1 sign depending on number of orbital swaps required to sort
+    ///
+    ///  
     
 #ifdef DEBUG
     //

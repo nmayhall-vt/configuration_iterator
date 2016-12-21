@@ -77,5 +77,13 @@ void Determinant::incr()
     
 };/*}}}*/
 
-//todo
+        //todo
 void Determinant::decr(){};
+
+
+//  maybe todo
+/*
+const int& Determinant::occ(const int&o, const int&i) const;
+const int& Determinant::vir(const int&o, const int&a) const;
+*/
+

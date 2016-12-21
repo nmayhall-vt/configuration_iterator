@@ -49,14 +49,24 @@ class Determinant
         void set_config(const vector<int>&); //!< set the index to specified config
         void reset(); //!< Reset configuration back to first index
         const size_t size(){return _size;}; //!<  Number of configs in space
-        
+       
+
+        /// These are used to get access to a specific orbital block index 
         CombinatorialIndex& get_block_index(const int& i){return _block_indices.at(i);}; //!<  Get reference to a specific block index 
         CombinatorialIndex& get_block_index_a(const int& i){return _block_indices.at(i);}; //!<  Get reference to a specific alpha block index 
         CombinatorialIndex& get_block_index_b(const int& i){return _block_indices.at(i+_space.n_blocks());}; //!<  Get reference to a specific beta block index 
         
-
+        //  read data
         //  computing data
         size_t calc_linear_index(); //!< Calculate the linear index
+        
+        //maybe todo...
+        /*
+        const int& occ(const int&o, const int&i) const; ///< Get i'th occupied orbital index in config of o'th orbital block
+        const int& vir(const int&o, const int&a) const; ///< Get a'th unnoccupied orbital index in config of o'th orbital block
+        */
+        
+
 };
 
 #endif  

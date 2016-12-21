@@ -12,6 +12,17 @@ OrbitalSpaces::OrbitalSpaces(const vector<int>& orb_blocks)
       */
     
     _n_blocks = orb_blocks.size();
+    _block_size_a = orb_blocks;
+    _block_size_b = orb_blocks;
+    int shift = 0;
+    for(int b=0; b<_n_blocks; b++)
+    {
+        _block_shift_a.push_back(shift);
+        _block_shift_b.push_back(shift);
+        shift += _block_size_a.at(b);
+    };
+    _n_orbs = shift;
+    /*
     int orb_i =0;
     for(int b=0; b<_n_blocks; b++)
     {
@@ -26,6 +37,7 @@ OrbitalSpaces::OrbitalSpaces(const vector<int>& orb_blocks)
         _block_size_a.push_back(tmp.size());
         _block_size_b.push_back(tmp.size());
     };
+    */
 };/*}}}*/
 
 OrbitalSpaces::OrbitalSpaces(const vector<int>& orb_block_a, const vector<int>& orb_blocks_b)

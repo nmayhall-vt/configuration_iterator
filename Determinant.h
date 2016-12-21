@@ -59,6 +59,8 @@ class Determinant
         //  read data
         //  computing data
         size_t calc_linear_index(); //!< Calculate the linear index
+        const int& occ(const int&i) const; ///< Get i'th occupied orbital in config
+        const int& vir(const int&a) const; ///< Get a'th unnoccupied orbital in config 
         
         //maybe todo...
         /*

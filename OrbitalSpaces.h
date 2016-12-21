@@ -34,22 +34,26 @@ class OrbitalSpaces
 
         /// Get number of orbital blocks defined
         int n_blocks(){return _n_blocks;}; 
-
         /// Get number of total orbitals
         int n_orbs(){return _n_orbs;}; 
 
-        /// Get orbital index shift for each alpha orbital block
-        const int& block_shift_a(const int& i) const {return _block_shift_a.at(i);};
-
-        /// Get orbital index shift for each beta orbital block
-        const int& block_shift_b(const int& i) const {return _block_shift_b.at(i);};
 
         /// Get size of each alpha orbital block
         const int& block_size_a(const int& i){return _block_size_a.at(i);};
-
         /// Get size of each beta orbital block
         const int& block_size_b(const int& i){return _block_size_a.at(i);}; 
+
         
+        /// Get orbital index shift for each alpha orbital block
+        const int& block_shift_a(const int& i) const {return _block_shift_a.at(i);};
+        /// Get orbital index shift for each beta orbital block
+        const int& block_shift_b(const int& i) const {return _block_shift_b.at(i);};
+        /// Set orbital index shift for each alpha block, i, to value of j 
+        void set_block_shift_a(const int& i, const int& j){_block_shift_a.at(i) = j;};
+        /// Set orbital index shift for each beta block, i, to value of j 
+        void set_block_shift_b(const int& i, const int& j){_block_shift_b.at(i) = j;};
+        
+
         void print(); ///< pretty print
 
         

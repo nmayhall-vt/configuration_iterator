@@ -51,6 +51,8 @@ class Determinant
         const size_t size(){return _size;}; //!<  Number of configs in space
         
         CombinatorialIndex& get_block_index(const int& i){return _block_indices.at(i);}; //!<  Get reference to a specific block index 
+        CombinatorialIndex& get_block_index_a(const int& i){return _block_indices.at(i);}; //!<  Get reference to a specific alpha block index 
+        CombinatorialIndex& get_block_index_b(const int& i){return _block_indices.at(i+_space.n_blocks());}; //!<  Get reference to a specific beta block index 
         
 
         //  computing data

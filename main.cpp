@@ -85,6 +85,10 @@ int main ()
             };
             p_a.print();
             cout << p_a.calc_linear_index() << endl;
+            CombinatorialIndex& a_str = p_a.get_block_index_a(2);
+            CombinatorialIndex& b_str = p_a.get_block_index_b(2);
+            a_str.print();
+            b_str.print();
         };
 
         printf(" +Test incr()/decr()\n");

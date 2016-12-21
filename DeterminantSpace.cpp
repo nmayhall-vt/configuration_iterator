@@ -77,7 +77,7 @@ void DeterminantSpace::print()
     printf(" Block     |");
     for(int b=0; b<_n_blocks; b++)
     {
-        printf(" %4i    ",b);
+        printf("%-9i",b);
     };
     printf("|\n");
     printf(" # Configs |");
@@ -85,7 +85,7 @@ void DeterminantSpace::print()
     {
         size_t block_dim = helpers::nchk(_spaces.block_size_a(b),elec_per_block_a(b)); 
         block_dim = block_dim * helpers::nchk(_spaces.block_size_b(b),elec_per_block_b(b));
-        printf(" %-7li  ",block_dim);
+        printf("%-9li",block_dim);
     };
     printf("|\n");
     printf(" Total size| %li",size());

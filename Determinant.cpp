@@ -7,12 +7,14 @@ Determinant::Determinant(DeterminantSpace& space)
     _block_indices.clear();
     for(int b=0; b<_space.orb_spaces().n_blocks(); b++)
     {
-        CombinatorialIndex alpha(_space.orb_spaces().block_size_b(b), _space.elec_per_block_a(b));
+        CombinatorialIndex alpha(_space.orb_spaces().block_size_a(b), _space.elec_per_block_a(b));
+        alpha.set_orb_shift( _space.orb_spaces().block_shift_a(b) );
         _block_indices.push_back(alpha);
     };
     for(int b=0; b<_space.orb_spaces().n_blocks(); b++)
     {
         CombinatorialIndex beta(_space.orb_spaces().block_size_b(b), _space.elec_per_block_b(b));
+        beta.set_orb_shift( _space.orb_spaces().block_shift_b(b) );
         _block_indices.push_back(beta);
     };
     _size = _space.size();
@@ -24,8 +26,11 @@ void Determinant::print()
     printf(" Determinant:  %12li\n",calc_linear_index());
     for(int b=0; b<_space.orb_spaces().n_blocks(); b++)
     {
-        printf(" ");
-        helpers::print(_block_indices.at(b).config(),_block_indices.at(b+_space.n_blocks()).config());
+        printf(" Shift: %4i,%-4i ",get_block_index_a(b).get_orb_shift(),get_block_index_b(b).get_orb_shift());
+        helpers::print(
+                    get_block_index_a(b).config(),
+                    get_block_index_b(b).config()
+                    );
     };
     printf("\n");
 };/*}}}*/

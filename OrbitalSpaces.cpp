@@ -48,16 +48,22 @@ OrbitalSpaces::OrbitalSpaces(const vector<int>& orb_block_a, const vector<int>& 
 
 void OrbitalSpaces::print()
 {/*{{{*/
+    printf(" Block     |");
+    for(int b=0; b<_n_blocks; b++)
+    {
+        printf(" %4i    ",b);
+    };
+    printf("|\n");
     printf(" Orbitals  |");
     for(int b=0; b<_n_blocks; b++)
     {
         printf("(%3i,%-3i)",block_size_a(b),block_size_b(b));
     };
     printf("|\n");
-    printf(" Block     |");
+    printf(" Shifts    |");
     for(int b=0; b<_n_blocks; b++)
     {
-        printf(" %4i    ",b);
+        printf("(%3i,%-3i)",block_shift_a(b),block_shift_b(b));
     };
     printf("|\n");
 };/*}}}*/

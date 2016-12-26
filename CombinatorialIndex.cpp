@@ -315,7 +315,7 @@ void CombinatorialIndex::double_excitation2(const int& i, const int& j, const in
     return;
 };/*}}}*/
 
-int CombinatorialIndex::occ(const int& i) const
+const int& CombinatorialIndex::occ(const int& i) const
 {/*{{{*/
 #ifdef DEBUG
     if(i >= _config.size()) throw std::range_error("occ: i >= _config.size()");
@@ -324,7 +324,7 @@ int CombinatorialIndex::occ(const int& i) const
     //return _config[i] + _orb_shift;
 };/*}}}*/
 
-int CombinatorialIndex::vir(const int& a) const
+const int& CombinatorialIndex::vir(const int& a) const
 {/*{{{*/
 #ifdef DEBUG
     if(a >= _vir.size()) throw std::range_error("occ: i >= _vir.size()");

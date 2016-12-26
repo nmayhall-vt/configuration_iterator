@@ -82,7 +82,7 @@ void Determinant::incr()
     
 };/*}}}*/
 
-        //todo
+//todo
 void Determinant::decr(){};
 
 

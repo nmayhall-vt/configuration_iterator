@@ -64,8 +64,8 @@ class CombinatorialIndex
         const size_t& linear_index() {return _lin_index;};      //!< Retrieve the linear index
         
         //  accessing data
-        int occ(const int&i) const; ///< Get i'th occupied orbital in config
-        int vir(const int&a) const; ///< Get a'th unnoccupied orbital in config 
+        const int& occ(const int&i) const; ///< Get i'th occupied orbital in config
+        const int& vir(const int&a) const; ///< Get a'th unnoccupied orbital in config 
         size_t max(); ///< Get length of index range
         //const int& get_orb_shift(){return _orb_shift;}; ///< Get the starting orbital index
 

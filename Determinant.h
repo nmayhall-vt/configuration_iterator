@@ -59,8 +59,10 @@ class Determinant
         //  read data
         //  computing data
         size_t calc_linear_index(); //!< Calculate the linear index
-        const int& occ(const int&i) const; ///< Get i'th occupied orbital in config
-        const int& vir(const int&a) const; ///< Get a'th unnoccupied orbital in config 
+        const int& occ_a(const int&b, const int&i) {return get_block_index_a(b).occ(i);}; ///< Get i'th occupied orbital in alpha config of block b
+        const int& occ_b(const int&b, const int&i) {return get_block_index_b(b).occ(i);}; ///< Get i'th occupied orbital in beta config of block b
+        const int& vir_a(const int&b, const int&a) {return get_block_index_a(b).vir(a);}; ///< Get a'th unnoccupied orbital in alpha config of block b 
+        const int& vir_b(const int&b, const int&a) {return get_block_index_b(b).vir(a);}; ///< Get a'th unnoccupied orbital in beta config of block b 
         
         //maybe todo...
         /*

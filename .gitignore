@@ -4,3 +4,7 @@ cmake_install.cmake
 CMakeCache.txt
 doc/
 configuration_iterator
+test1
+test2
+libconfiguration_iterator.a
+

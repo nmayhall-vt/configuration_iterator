@@ -18,7 +18,7 @@ add_library( configuration_iterator
 	)
 
 add_executable( test1 test1.cpp)
-add_executable( test2 test1.cpp)
+add_executable( test2 test2.cpp)
 
 target_link_libraries( test1 configuration_iterator )
 target_link_libraries( test2 configuration_iterator )

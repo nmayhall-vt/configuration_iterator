@@ -5,7 +5,7 @@ CombinatorialIndex::CombinatorialIndex()
     _max = -1;
     _n_orbs = 0;
     _n_elec = 0;
-    //_orb_shift = 0;
+    _orb_shift = 0;
 };/*}}}*/
 
 CombinatorialIndex::CombinatorialIndex(const int& n_, const int& k_)
@@ -13,7 +13,7 @@ CombinatorialIndex::CombinatorialIndex(const int& n_, const int& k_)
     _max = -1;
     _n_orbs = n_;
     _n_elec = k_;
-    //_orb_shift = 0;
+    _orb_shift = 0;
     
     // Start with initial _configuration
     //_config.resize(_n_elec);
@@ -53,7 +53,7 @@ void CombinatorialIndex::decr()
 void CombinatorialIndex::print()
 {/*{{{*/
     helpers::print(_config);
-    //helpers::print(_config,_orb_shift);
+    helpers::print(_config,_orb_shift);
 };/*}}}*/
 
 size_t CombinatorialIndex::max()
@@ -315,22 +315,22 @@ void CombinatorialIndex::double_excitation2(const int& i, const int& j, const in
     return;
 };/*}}}*/
 
-const int& CombinatorialIndex::occ(const int& i) const
+const int CombinatorialIndex::occ(const int& i)
 {/*{{{*/
 #ifdef DEBUG
     if(i >= _config.size()) throw std::range_error("occ: i >= _config.size()");
 #endif
-    return _config[i];
-    //return _config[i] + _orb_shift;
+    //return _config[i];
+    return _config[i] + _orb_shift;
 };/*}}}*/
 
-const int& CombinatorialIndex::vir(const int& a) const
+const int CombinatorialIndex::vir(const int& a)
 {/*{{{*/
 #ifdef DEBUG
     if(a >= _vir.size()) throw std::range_error("occ: i >= _vir.size()");
 #endif
-    return _vir[a];
-    //return _vir[a] + _orb_shift;
+    //return _vir[a];
+    return _vir[a] + _orb_shift;
 };/*}}}*/
 
 void CombinatorialIndex::flip(vector<int>& v, const int& p, const int& q)

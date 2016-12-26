@@ -28,7 +28,7 @@ class CombinatorialIndex
     
     private:
         int _n_orbs;  
-        //int _orb_shift;  
+        int _orb_shift;  
         int _n_elec;  
         vector<int> _scr; ///< scratch vector
         vector<int> _config_reset; ///< store original config 
@@ -55,7 +55,7 @@ class CombinatorialIndex
         void incr(); //!< Increment the combinatorial index by one, updating the configuration strings: _config/_vir
         void decr(); //!< Decrement the combinatorial index by one, updating the configuration strings: _config/_vir
         void set_config(const vector<int>&); //!< set the index to specified config
-        //void set_orb_shift(const int&i){_orb_shift = i;}; ///< Define the starting orbital index
+        void set_orb_shift(const int&i){_orb_shift = i;}; ///< Define the starting orbital index
         void reset(); //!< Reset configuration back to first index
         
 
@@ -64,10 +64,10 @@ class CombinatorialIndex
         const size_t& linear_index() {return _lin_index;};      //!< Retrieve the linear index
         
         //  accessing data
-        const int& occ(const int&i) const; ///< Get i'th occupied orbital in config
-        const int& vir(const int&a) const; ///< Get a'th unnoccupied orbital in config 
+        const int occ(const int&i); ///< Get i'th occupied orbital in config
+        const int vir(const int&a); ///< Get a'th unnoccupied orbital in config 
         size_t max(); ///< Get length of index range
-        //const int& get_orb_shift(){return _orb_shift;}; ///< Get the starting orbital index
+        const int& get_orb_shift(){return _orb_shift;}; ///< Get the starting orbital index
 
         /// Get vector of configuration
         vector<int>& config() {return _config;}; 

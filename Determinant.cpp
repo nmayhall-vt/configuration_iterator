@@ -8,13 +8,13 @@ Determinant::Determinant(DeterminantSpace& space)
     for(int b=0; b<_space.orb_spaces().n_blocks(); b++)
     {
         CombinatorialIndex alpha(_space.orb_spaces().block_size_a(b), _space.elec_per_block_a(b));
-        //alpha.set_orb_shift( _space.orb_spaces().block_shift_a(b) );
+        alpha.set_orb_shift( _space.orb_spaces().block_shift_a(b) );
         _block_indices.push_back(alpha);
     };
     for(int b=0; b<_space.orb_spaces().n_blocks(); b++)
     {
         CombinatorialIndex beta(_space.orb_spaces().block_size_b(b), _space.elec_per_block_b(b));
-        //beta.set_orb_shift( _space.orb_spaces().block_shift_b(b) );
+        beta.set_orb_shift( _space.orb_spaces().block_shift_b(b) );
         _block_indices.push_back(beta);
     };
     _size = _space.size();

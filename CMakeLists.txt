@@ -2,7 +2,8 @@ cmake_minimum_required (VERSION 2.6)
 project (configuration_iterator)
 
 #add_definitions(-DDEBUG)
-add_definitions(-O3 -g -c)
+add_definitions(-DDEBUG -O3 -g -c)
+#add_definitions(-O3 -g -c)
 
 add_library( configuration_iterator 
 	CombinatorialIndex.cpp 
@@ -15,6 +16,8 @@ add_library( configuration_iterator
 	Determinant.h 
 	OrbitalSpaces.h
 	helpers.h
+	InCoreIntegrals.h
+	InCoreIntegrals.cpp
 	)
 
 add_executable( test1 test1.cpp)

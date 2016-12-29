@@ -6,9 +6,11 @@
 #include "DeterminantSpace.h"
 #include "Determinant.h"
 #include "OrbitalSpaces.h"
+#include "InCoreIntegrals.h"
 #include <armadillo>
 
 using namespace arma;
+long int InCoreIntegrals::mem_used = 0;
 
 int main ()
 {
@@ -38,6 +40,42 @@ int main ()
     cas_space.print();
     printf("\n");
 
+
+    InCoreIntegrals I_aaaa;
+    I_aaaa = InCoreIntegrals(
+            spaces.block_shift_a(2), spaces.block_shift_a(2)+spaces.block_size_a(2)-1,
+            spaces.block_shift_a(2), spaces.block_shift_a(2)+spaces.block_size_a(2)-1,
+            spaces.block_shift_a(2), spaces.block_shift_a(2)+spaces.block_size_a(2)-1,
+            spaces.block_shift_a(2), spaces.block_shift_a(2)+spaces.block_size_a(2)-1
+            );
+    I_aaaa.allocate();
+    srand(1);
+    I_aaaa.fill_rand();
+
+    // symmetrize single bar integrals
+    {
+        int size = spaces.block_size_a(2);
+        int shift = spaces.block_shift_a(2);
+        for(int i=shift; i<shift+size; i++)
+        {
+            for(int j=shift; j<shift+size; j++)
+            {
+                for(int k=i; k<shift+size; k++)
+                {
+                    for(int l=j; l<shift+size; l++)
+                    {
+                        I_aaaa(k,j,i,l) = I_aaaa(i,j,k,l);
+                        I_aaaa(i,l,k,j) = I_aaaa(i,j,k,l);
+                        I_aaaa(k,l,i,j) = I_aaaa(i,j,k,l);
+                    };  
+                };  
+            };  
+        };
+        cout << I_aaaa(0+shift,1+shift,2+shift,3+shift) << endl;
+        cout << I_aaaa(2+shift,1+shift,0+shift,3+shift) << endl;
+        cout << I_aaaa(0+shift,3+shift,2+shift,1+shift) << endl;
+        cout << I_aaaa(2+shift,3+shift,0+shift,1+shift) << endl;
+    };
     Determinant D0(cas_space);
     CombinatorialIndex& a_str = D0.get_block_index_a(2);
     CombinatorialIndex& b_str = D0.get_block_index_b(2);

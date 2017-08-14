@@ -53,7 +53,7 @@ void CombinatorialIndex::decr()
 void CombinatorialIndex::print()
 {/*{{{*/
     helpers::print(_config);
-    helpers::print(_config,_orb_shift);
+    //helpers::print(_config,_orb_shift);
 };/*}}}*/
 
 size_t CombinatorialIndex::max()

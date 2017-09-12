@@ -7,4 +7,5 @@ configuration_iterator
 test1
 test2
 libconfiguration_iterator.a
-
+html/
+latex/
